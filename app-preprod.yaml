@@ -7,21 +7,21 @@ metadata:
     team: teamfamilie
 
 spec:
-  image: navikt/familie-ba-vedtak-consumer:{{version}}
-  port: 8080
+  image: {{ image }}
+  port: 8093
   liveness:
-    path: /internal/status/isAlive
-    initialDelay: 30
+    path: /internal/health
+    initialDelay: 20
     failureThreshold: 10
   readiness:
-    path: /internal/status/isAlive
-    initialDelay: 30
+    path: /internal/health
+    initialDelay: 20
     failureThreshold: 10
   prometheus:
     enabled: true
     path: /internal/prometheus
   vault:
-    enabled: false
+    enabled: true
   replicas:
     min: 2
     max: 4

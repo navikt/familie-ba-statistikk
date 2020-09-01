@@ -1,3 +1,6 @@
+application:
+  name: familie-ba-vedtak-consumer
+
 server:
   port: 8093
   servlet:
@@ -25,6 +28,4 @@ management:
   endpoints.web:
     exposure.include: info, health, metrics, prometheus
     base-path: "/internal"
-    path-mapping:
-      info: "status/isAlive"
   metrics.export.prometheus.enabled: true
