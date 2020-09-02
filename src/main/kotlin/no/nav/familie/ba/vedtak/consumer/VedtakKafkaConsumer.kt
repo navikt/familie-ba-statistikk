@@ -13,7 +13,7 @@ class VedtakKafkaConsumer {
     private val secureLogger = LoggerFactory.getLogger("secureLogger")
 
     @KafkaListener(topics = ["aapen-barnetrygd-vedtak-v1"],
-                   id = "familie-ba-vedtak-consumer",
+                   id = "familie-ba-statistikk",
                    idIsGroup = false,
                    containerFactory = "kafkaListenerContainerFactory")
     @Transactional

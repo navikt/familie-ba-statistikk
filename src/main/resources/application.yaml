@@ -1,5 +1,5 @@
 application:
-  name: familie-ba-vedtak-consumer
+  name: familie-ba-statistikk
 
 server:
   port: 8093
@@ -10,14 +10,14 @@ spring:
   autoconfigure.exclude: org.springframework.boot.autoconfigure.web.servlet.error.ErrorMvcAutoConfiguration
   main.banner-mode: "off"
   kafka:
-    client-id: familie-ba-vedtak-consumer
+    client-id: familie-ba-statistikk
     properties:
       security.protocol: SASL_SSL
       sasl:
         mechanism: PLAIN
         jaas.config: org.apache.kafka.common.security.plain.PlainLoginModule required username="${CREDENTIAL_USERNAME}" password="${CREDENTIAL_PASSWORD}";
     consumer:
-      group-id: familie-ba-vedtak-consumer
+      group-id: familie-ba-statistikk
       auto-offset-reset: latest
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
