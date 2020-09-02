@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional
 @Service
 class VedtakKafkaConsumer {
     private val logger = LoggerFactory.getLogger(this::class.java)
+    private val secureLogger = LoggerFactory.getLogger("secureLogger")
 
     @KafkaListener(topics = ["aapen-barnetrygd-vedtak-v1"],
                    id = "familie-ba-vedtak-consumer",
@@ -17,6 +18,7 @@ class VedtakKafkaConsumer {
                    containerFactory = "kafkaListenerContainerFactory")
     @Transactional
     fun listen(cr: ConsumerRecord<String, String>, ack: Acknowledgment) {
-        logger.info(cr.toString())
+        logger.info("Vedtak mottatt")
+        secureLogger.info("Vedtak mottatt: $cr")
     }
 }

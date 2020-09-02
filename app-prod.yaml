@@ -22,6 +22,9 @@ spec:
     path: /internal/prometheus
   vault:
     enabled: true
+    paths:
+      - kvPath: /serviceuser/data/prod/srvfamilie-ba-konsum
+        mountPath: /var/run/secrets/srvfamilie-ba-konsum
   replicas:
     min: 2
     max: 4
@@ -39,3 +42,7 @@ spec:
   env:
     - name: SPRING_PROFILES_ACTIVE
       value: prod
+    - name: CREDENTIAL_USERNAME
+      value: /var/run/secrets/srvfamilie-ba-konsum/username
+    - name: CREDENTIAL_PASSWORD
+      value: /var/run/secrets/srvfamilie-ba-konsum/password
