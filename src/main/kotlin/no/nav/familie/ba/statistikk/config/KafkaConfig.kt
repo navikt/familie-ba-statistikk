@@ -1,4 +1,4 @@
-package no.nav.familie.ba.vedtak.consumer
+package no.nav.familie.ba.statistikk.config
 
 import org.springframework.boot.autoconfigure.kafka.KafkaProperties
 import org.springframework.context.annotation.Bean

@@ -1,4 +1,4 @@
-package no.nav.familie.ba.vedtak.consumer
+package no.nav.familie.ba.statistikk
 
 import org.apache.kafka.clients.consumer.ConsumerRecord
 import org.slf4j.LoggerFactory

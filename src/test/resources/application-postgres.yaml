@@ -1,0 +1,24 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/familie-ba-statistikk
+    password: test
+    username: postgres
+  flyway:
+    enabled: true
+  jpa:
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql=false
+    hibernate:
+      ddl-auto: none
+  cloud:
+    vault:
+      database:
+        role: postgres
+  kafka:
+    bootstrap-servers: http://localhost:9092
+    properties:
+      security.protocol: SASL_PLAINTEXT
+      sasl:
+        jaas.config: org.apache.kafka.common.security.plain.PlainLoginModule required username="igroup" password="itest";
