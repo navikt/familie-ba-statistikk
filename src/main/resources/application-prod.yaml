@@ -4,4 +4,4 @@ spring:
     properties:
       schema.registry.url: http://kafka-schema-registry.tpa:8081
   datasource:
-    url: jdbc:postgresql://A01DBVL014.adeo.no:5432/familie-ba-statistikk
+    url: jdbc:postgresql://A01DBVL020.adeo.no:5432/familie-ba-statistikk
