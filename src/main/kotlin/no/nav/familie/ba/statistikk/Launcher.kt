@@ -1,11 +1,13 @@
-package no.nav.familie.ba.mottak
+package no.nav.familie.ba.statistikk
 
+import no.nav.familie.ba.statistikk.config.ApplicationConfig
 import org.springframework.boot.SpringApplication
 import org.springframework.boot.autoconfigure.SpringBootApplication
 
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = ["no.nav.familie.ba.statistikk"])
 class Launcher
 
 fun main(args: Array<String>) {
-    SpringApplication.run(Launcher::class.java, *args)
+    val app = SpringApplication(ApplicationConfig::class.java)
+    app.run(*args)
 }
