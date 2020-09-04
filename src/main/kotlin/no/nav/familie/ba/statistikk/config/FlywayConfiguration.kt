@@ -9,9 +9,8 @@ import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.Profile
 
 @Configuration
-@Profile("!dev")
 @ConditionalOnProperty("spring.flyway.enabled")
-class FlywayConfig {
+class FlywayConfiguration {
 
     @Bean
     fun flywayConfig(@Value("\${spring.cloud.vault.database.role}") role: String): FlywayConfigurationCustomizer {
