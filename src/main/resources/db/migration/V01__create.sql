@@ -1,6 +1,6 @@
 CREATE TABLE VEDTAK_DVH (
                       ID            bigint                                               NOT NULL PRIMARY KEY,
-                      VEDTAK_JSON   text                                                 NOT NULL,
+                      VEDTAK_JSON   jsonb                                                NOT NULL,
                       OPPRETTET_TID timestamp(3) DEFAULT LOCALTIMESTAMP                  NOT NULL
 );
 
