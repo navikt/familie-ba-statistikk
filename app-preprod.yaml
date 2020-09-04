@@ -41,7 +41,3 @@ spec:
   env:
     - name: SPRING_PROFILES_ACTIVE
       value: preprod
-    - name: CREDENTIAL_USERNAME
-      value: /var/run/secrets/srvfamilie-ba-konsum/username
-    - name: CREDENTIAL_PASSWORD
-      value: /var/run/secrets/srvfamilie-ba-konsum/password
