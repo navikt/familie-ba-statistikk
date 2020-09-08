@@ -3,17 +3,13 @@ package no.nav.familie.ba.statistikk.config
 import no.nav.familie.log.filter.LogFilter
 import org.slf4j.LoggerFactory
 import org.springframework.boot.SpringBootConfiguration
-import org.springframework.boot.autoconfigure.domain.EntityScan
 import org.springframework.boot.context.properties.ConfigurationPropertiesScan
 import org.springframework.boot.web.servlet.FilterRegistrationBean
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.ComponentScan
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories
 
 @SpringBootConfiguration
 @ConfigurationPropertiesScan
-@EnableJpaRepositories(ApplicationConfig.pakkenavn)
-@EntityScan(ApplicationConfig.pakkenavn)
 @ComponentScan(ApplicationConfig.pakkenavn)
 class ApplicationConfig {
 

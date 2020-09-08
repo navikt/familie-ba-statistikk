@@ -5,12 +5,5 @@ spring:
       security.protocol: SASL_PLAINTEXT
       sasl:
         jaas.config: org.apache.kafka.common.security.plain.PlainLoginModule required username="igroup" password="itest";
-  jpa:
-    show-sql: false
-    properties:
-      hibernate:
-        format_sql=false
-    hibernate:
-      ddl-auto: create
   flyway:
     enabled: false
