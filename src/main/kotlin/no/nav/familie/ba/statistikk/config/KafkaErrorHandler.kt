@@ -1,4 +1,4 @@
-package no.nav.familie.ba.vedtak.consumer
+package no.nav.familie.ba.statistikk.config
 
 import org.apache.kafka.clients.consumer.Consumer
 import org.apache.kafka.clients.consumer.ConsumerRecord

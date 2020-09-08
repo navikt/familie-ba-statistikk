@@ -21,6 +21,8 @@
         <jvmTarget>11</jvmTarget>
         <kotlin.version>1.4.0</kotlin.version>
         <felles.version>1.20200511201614_685f629</felles.version>
+        <felles-kontrakter.version>2.0_20200723115650_db71799</felles-kontrakter.version>
+        <spring-cloud.version>2.2.5.RELEASE</spring-cloud.version>
     </properties>
 
     <dependencies>
@@ -30,7 +32,10 @@
             <artifactId>kotlin-stdlib</artifactId>
             <version>${kotlin.version}</version>
         </dependency>
-
+      <dependency>
+          <groupId>org.jetbrains.kotlin</groupId>
+          <artifactId>kotlin-reflect</artifactId>
+      </dependency>
         <!-- Spring Boot -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -52,6 +57,10 @@
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-validation</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
             <exclusions>
@@ -66,11 +75,58 @@
             <artifactId>spring-kafka</artifactId>
         </dependency>
 
+        <!-- Database -->
+        <dependency>
+            <groupId>org.flywaydb</groupId>
+            <artifactId>flyway-core</artifactId>
+            <version>6.5.3</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.vault</groupId>
+            <artifactId>spring-vault-core</artifactId>
+            <version>2.2.2.RELEASE</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-vault-config-databases</artifactId>
+            <version>${spring-cloud.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-jdbc</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>42.2.16</version>
+        </dependency>
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.testcontainers</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>1.14.2</version>
+            <scope>test</scope>
+        </dependency>
+
         <!-- NAV-interne avhengigheter -->
         <dependency>
             <groupId>no.nav.familie.felles</groupId>
             <artifactId>log</artifactId>
             <version>${felles.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>no.nav.familie.kontrakter</groupId>
+            <artifactId>felles</artifactId>
+            <version>${felles-kontrakter.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>no.nav.familie.eksterne.kontrakter</groupId>
+            <artifactId>stonadsstatistikk</artifactId>
+            <version>2.0_20200903102102_3e48ee9</version>
         </dependency>
 
         <!-- Annet -->
@@ -152,7 +208,6 @@
                     </args>
                     <compilerPlugins>
                         <plugin>spring</plugin>
-                        <plugin>jpa</plugin>
                     </compilerPlugins>
                 </configuration>
                 <dependencies>

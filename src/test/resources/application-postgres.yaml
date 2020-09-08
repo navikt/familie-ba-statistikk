@@ -1,4 +1,14 @@
 spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/familie-ba-statistikk
+    password: test
+    username: postgres
+  flyway:
+    enabled: true
+  cloud:
+    vault:
+      database:
+        role: postgres
   kafka:
     bootstrap-servers: http://localhost:9092
     properties:
