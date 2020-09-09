@@ -17,12 +17,17 @@ class VedtakKafkaConsumer(private val vedtakDvhRepository: VedtakDvhRepository) 
     @KafkaListener(topics = ["aapen-barnetrygd-vedtak-v1"],
                    id = "familie-ba-statistikk",
                    idIsGroup = false,
-                   containerFactory = "kafkaListenerContainerFactory")
+                   containerFactory = "vedtakDvhListenerContainerFactory")
     @Transactional
     fun consume(vedtak: VedtakDVH, ack: Acknowledgment) {
-        logger.info("Vedtak mottatt")
-        secureLogger.info("Vedtak mottatt: $vedtak")
-        vedtakDvhRepository.lagre(vedtak)
+        vedtakDvhRepository.lagre(vedtak).apply {
+            when {
+                this == 1 -> logger.info("Nytt vedtak mottatt og lagret.")
+                this > 1 -> logger.error("Vedtak mottatt på nytt. Lagret, merket som duplikat.")
+                else -> throw error("Lagring av nytt vedtak mislyktes!")
+            }
+        }
+        secureLogger.info("Vedtak mottatt og lagret: $vedtak")
         ack.acknowledge()
     }
 }
