@@ -2,6 +2,7 @@ package no.nav.familie.ba.statistikk
 
 import no.nav.familie.ba.statistikk.domene.VedtakDvhRepository
 import no.nav.familie.eksterne.kontrakter.VedtakDVH
+import org.apache.kafka.clients.consumer.ConsumerRecord
 import org.slf4j.LoggerFactory
 import org.springframework.kafka.annotation.KafkaListener
 import org.springframework.kafka.support.Acknowledgment
@@ -19,12 +20,13 @@ class VedtakKafkaConsumer(private val vedtakDvhRepository: VedtakDvhRepository) 
                    idIsGroup = false,
                    containerFactory = "vedtakDvhListenerContainerFactory")
     @Transactional
-    fun consume(vedtak: VedtakDVH, ack: Acknowledgment) {
-        vedtakDvhRepository.lagre(vedtak).apply {
+    fun consume(cr: ConsumerRecord<Long, VedtakDVH>, ack: Acknowledgment) {
+        val vedtak = cr.value()
+        vedtakDvhRepository.lagre(cr.offset(), vedtak).apply {
             when {
                 this == 1 -> logger.info("Nytt vedtak mottatt og lagret.")
-                this > 1 -> logger.error("Vedtak mottatt på nytt. Lagret, merket som duplikat.")
-                else -> throw error("Lagring av nytt vedtak mislyktes!")
+                this > 1 -> logger.error("Vedtak mottatt på nytt. Lagret, merket som duplikat. offset=${cr.offset()} key=${cr.key()}")
+                else -> throw error("Lagring av nytt vedtak mislyktes! offset=${cr.offset()} key=${cr.key()}")
             }
         }
         secureLogger.info("Vedtak mottatt og lagret: $vedtak")
