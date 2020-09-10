@@ -8,14 +8,21 @@ import org.springframework.stereotype.Repository
 @Repository
 class VedtakDvhRepository(private val jdbcTemplate: JdbcTemplate) {
 
-    fun lagre(vedtak: VedtakDVH) {
-        jdbcTemplate.update("insert into VEDTAK_DVH(ID, VEDTAK_JSON) values (nextval('VEDTAK_DVH_SEQ'), to_json(?::json))",
-                            objectMapper.writeValueAsString(vedtak))
+    fun lagre(vedtak: VedtakDVH): Int {
+        val sql = "insert into VEDTAK_DVH(ID, VEDTAK_JSON, ER_DUPLIKAT) values (nextval('VEDTAK_DVH_SEQ'), to_json(?::json), ?)"
+
+        return antallVedtakMed(vedtak.behandlingsId).let {
+            jdbcTemplate.update(sql, objectMapper.writeValueAsString(vedtak), it > 0) + it
+        }
     }
 
     fun finnes(vedtak: VedtakDVH): Boolean {
+        return antallVedtakMed(vedtak.behandlingsId) > 0
+    }
+
+    private fun antallVedtakMed(behandlingsId: String): Int {
         return jdbcTemplate.queryForObject("select count(*) from VEDTAK_DVH where VEDTAK_JSON ->> 'behandlingsId' = ?",
-                                    Int::class.java,
-                                    vedtak.behandlingsId) > 0
+                                           Int::class.java,
+                                           behandlingsId)
     }
 }

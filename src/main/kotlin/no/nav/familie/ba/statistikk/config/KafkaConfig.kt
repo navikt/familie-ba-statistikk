@@ -16,7 +16,7 @@ import java.time.Duration
 class KafkaConfig {
 
     @Bean
-    fun kafkaListenerContainerFactory(properties: KafkaProperties, kafkaErrorHandler: KafkaErrorHandler)
+    fun vedtakDvhListenerContainerFactory(properties: KafkaProperties, kafkaErrorHandler: KafkaErrorHandler)
             : ConcurrentKafkaListenerContainerFactory<String, VedtakDVH> {
         val factory = ConcurrentKafkaListenerContainerFactory<String, VedtakDVH>()
         factory.containerProperties.ackMode = ContainerProperties.AckMode.MANUAL_IMMEDIATE
