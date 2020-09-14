@@ -1,0 +1,56 @@
+name: Build-Deploy
+on:
+  push:
+    branches:
+      - '*'
+      - '*/*'
+env:
+  IMAGE: docker.pkg.github.com/${{ github.repository }}/familie-ba-statistikk:${{ github.sha }}
+  IMAGE_LATEST: docker.pkg.github.com/${{ github.repository }}/familie-ba-statistikk:latest
+jobs:
+  deploy:
+    name: Bygg app/image, push til github, deploy til dev-fss/prod-fss
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - uses: actions/setup-java@v1
+        with:
+          java-version: 11
+      - uses: actions/cache@v1
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-cache-${{ hashFiles('pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-maven-cache-
+      - name: Bygg med maven
+        env:
+          GITHUB_USERNAME: x-access-token
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          mvn -B --no-transfer-progress package --settings .m2/maven-settings.xml --file pom.xml
+      - name: Bygg Docker image og push til Github Package
+        env:
+          GITHUB_USERNAME: x-access-token
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          docker build -t ${IMAGE} -t ${IMAGE_LATEST} .
+          echo "$GITHUB_TOKEN" | docker login --username "$GITHUB_USERNAME" --password-stdin docker.pkg.github.com
+          docker push ${IMAGE}
+      - name: Deploy til dev-gcp
+        uses: nais/deploy/actions/deploy@v1
+        env:
+          APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
+          CLUSTER: dev-gcp
+          RESOURCE: app-gcp.yaml
+          VAR: miljo=dev
+      - name: Push Docker image med 'latest' tag
+        if: github.ref == 'refs/heads/master'
+        run: docker push ${IMAGE_LATEST}
+      - name: Deploy til prod-gcp
+        if: github.ref == 'refs/heads/master'
+        uses: nais/deploy/actions/deploy@v1
+        env:
+          APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
+          CLUSTER: prod-gcp
+          RESOURCE: app-gcp.yaml
+          VAR: miljo=prod
