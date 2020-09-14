@@ -22,7 +22,7 @@ spec:
     path: /internal/prometheus
   gcp:
     sqlInstances:
-      type: POSTGRES_11
+      - type: POSTGRES_11
       databases:
         - name: familie-ba-statistikk
           envVarPrefix: DB
