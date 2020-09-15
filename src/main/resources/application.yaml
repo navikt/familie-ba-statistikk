@@ -37,3 +37,5 @@ management:
     exposure.include: info, health, metrics, prometheus
     base-path: "/internal"
   metrics.export.prometheus.enabled: true
+
+DB_ROLE: familie-ba-statistikk-admin

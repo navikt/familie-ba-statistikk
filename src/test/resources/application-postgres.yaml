@@ -5,13 +5,11 @@ spring:
     username: postgres
   flyway:
     enabled: true
-  cloud:
-    vault:
-      database:
-        role: postgres
   kafka:
     bootstrap-servers: http://localhost:9092
     properties:
       security.protocol: SASL_PLAINTEXT
       sasl:
         jaas.config: org.apache.kafka.common.security.plain.PlainLoginModule required username="igroup" password="itest";
+
+DB_ROLE: postgres
