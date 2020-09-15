@@ -8,6 +8,7 @@ metadata:
 
 spec:
   image: {{ image }}
+  team: teamfamilie
   port: 8093
   liveness:
     path: /internal/health
@@ -41,6 +42,6 @@ spec:
     enabled: true
   env:
     - name: SPRING_PROFILES_ACTIVE
-      value: {{miljo}},gcp
+      value: {{miljo}}gcp
   envFrom:
     - secret: ba-statistikk-secrets
