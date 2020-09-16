@@ -9,12 +9,12 @@ import org.springframework.stereotype.Repository
 @Repository
 class VedtakDvhRepository(private val jdbcTemplate: NamedParameterJdbcTemplate) {
 
-    fun lagre(offset: Long, vedtak: VedtakDVH): Int {
+    fun lagre(offset: Long, behandlingId: Long, vedtakJson: String): Int {
         val sql =
                 "insert into VEDTAK_DVH(ID, VEDTAK_JSON, ER_DUPLIKAT, OFFSET_VERDI) values (nextval('VEDTAK_DVH_SEQ'), to_json(:jsontext::json), :duplikat, :offset)"
-        val antallVedtak = antallVedtakMed(vedtak.behandlingsId)
+        val antallVedtak = antallVedtakMed(behandlingId.toString())
         val parameters = MapSqlParameterSource()
-                .addValue("jsontext", objectMapper.writeValueAsString(vedtak))
+                .addValue("jsontext", vedtakJson)
                 .addValue("offset", offset)
                 .addValue("duplikat", antallVedtak > 0)
 
