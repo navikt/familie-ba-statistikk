@@ -20,7 +20,7 @@ class VedtakKafkaConsumer(private val vedtakDvhRepository: VedtakDvhRepository) 
                    idIsGroup = false,
                    containerFactory = "vedtakDvhListenerContainerFactory")
     @Transactional
-    fun consume(cr: ConsumerRecord<Long, String>, ack: Acknowledgment) {
+    fun consume(cr: ConsumerRecord<String, String>, ack: Acknowledgment) {
         try {
             val vedtak = cr.value()
             vedtakDvhRepository.lagre(cr.offset(), cr.key(), vedtak).apply {

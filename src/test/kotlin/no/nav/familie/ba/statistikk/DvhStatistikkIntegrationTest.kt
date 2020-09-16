@@ -60,10 +60,10 @@ class DvhStatistikkIntegrationTest {
     fun `lagre() returverdi skal telle duplikater`() {
         val vedtak = TestData.vedtakDhv()
         val vedtakJson = objectMapper.writeValueAsString(vedtak)
-        Assertions.assertEquals(1, vedtakDvhRepository.lagre(1, vedtak.behandlingsId.toLong(), vedtakJson))
-        Assertions.assertEquals(2, vedtakDvhRepository.lagre(1, vedtak.behandlingsId.toLong(), vedtakJson))
-        Assertions.assertEquals(3, vedtakDvhRepository.lagre(1, vedtak.behandlingsId.toLong(), vedtakJson))
-        Assertions.assertEquals(1, vedtakDvhRepository.lagre(1, vedtak.copy(behandlingsId = "2").behandlingsId.toLong(),
+        Assertions.assertEquals(1, vedtakDvhRepository.lagre(1, vedtak.behandlingsId, vedtakJson))
+        Assertions.assertEquals(2, vedtakDvhRepository.lagre(1, vedtak.behandlingsId, vedtakJson))
+        Assertions.assertEquals(3, vedtakDvhRepository.lagre(1, vedtak.behandlingsId, vedtakJson))
+        Assertions.assertEquals(1, vedtakDvhRepository.lagre(1, vedtak.copy(behandlingsId = "2").behandlingsId,
                                                              vedtakJson))
     }
 
@@ -72,12 +72,12 @@ class DvhStatistikkIntegrationTest {
         val vedtak = TestData.vedtakDhv()
         val vedtakJson = "FOO"
         Assertions.assertThrows(DataIntegrityViolationException::class.java) {
-            vedtakDvhRepository.lagre(1, vedtak.behandlingsId.toLong(), vedtakJson)
+            vedtakDvhRepository.lagre(1, vedtak.behandlingsId, vedtakJson)
         }
     }
 
 
-    private fun lagConsumerRecord(vedtak: VedtakDVH): ConsumerRecord<Long, String> {
-        return ConsumerRecord("topic", 1, 1, vedtak.behandlingsId.toLong(), objectMapper.writeValueAsString(vedtak))
+    private fun lagConsumerRecord(vedtak: VedtakDVH): ConsumerRecord<String, String> {
+        return ConsumerRecord("topic", 1, 1, vedtak.behandlingsId, objectMapper.writeValueAsString(vedtak))
     }
 }
