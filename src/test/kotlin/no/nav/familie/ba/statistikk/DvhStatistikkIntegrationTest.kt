@@ -1,5 +1,6 @@
 package no.nav.familie.ba.statistikk
 
+import com.fasterxml.jackson.core.JsonProcessingException
 import io.mockk.every
 import io.mockk.mockk
 import no.nav.familie.ba.statistikk.database.DbContainerInitializer
@@ -57,6 +58,27 @@ class DvhStatistikkIntegrationTest {
      }
 
     @Test
+    fun `consume() skal kaste error hvis json ikke er i henhold til kontrakt`() {
+        val repository: VedtakDvhRepository = mockk()
+        every { repository.lagre(1, any(), any()) } returns 1
+
+        Assertions.assertThrows(JsonProcessingException::class.java) {
+            VedtakKafkaConsumer(repository)
+                    .consume(lagConsumerRecord("{\"sdf\":\"sdf\"}"), ack)
+        }
+
+
+    }
+
+    @Test
+    fun `consume() skal ikke kaste error hvis vi får inn ugyldig json`() {
+
+        Assertions.assertDoesNotThrow{
+                VedtakKafkaConsumer(vedtakDvhRepository).consume(lagConsumerRecord(""), ack)}
+
+    }
+
+    @Test
     fun `lagre() returverdi skal telle duplikater`() {
         val vedtak = TestData.vedtakDhv()
         val vedtakJson = objectMapper.writeValueAsString(vedtak)
@@ -79,5 +101,9 @@ class DvhStatistikkIntegrationTest {
 
     private fun lagConsumerRecord(vedtak: VedtakDVH): ConsumerRecord<String, String> {
         return ConsumerRecord("topic", 1, 1, vedtak.behandlingsId, objectMapper.writeValueAsString(vedtak))
+    }
+
+    private fun lagConsumerRecord(vedtak: String): ConsumerRecord<String, String> {
+        return ConsumerRecord("topic", 1, 1, "1", vedtak)
     }
 }
