@@ -41,8 +41,8 @@ jobs:
         env:
           APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
           CLUSTER: dev-gcp
-          RESOURCE: app-gcp.yaml
-          VAR: miljo=dev
+          RESOURCE: nais.yaml
+          VARS: .deploy/dev-vars.yaml
       - name: Push Docker image med 'latest' tag
         if: github.ref == 'refs/heads/master'
         run: docker push ${IMAGE_LATEST}
@@ -52,5 +52,5 @@ jobs:
         env:
           APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
           CLUSTER: prod-gcp
-          RESOURCE: app-gcp.yaml
-          VAR: miljo=prod
+          RESOURCE: nais.yaml
+          VARS: .deploy/prod-vars.yaml

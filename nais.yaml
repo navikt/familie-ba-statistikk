@@ -38,10 +38,16 @@ spec:
     requests:
       memory: 512Mi
       cpu: 500m
+  accessPolicy:
+    outbound:
+      external:
+      {{#each externalHosts as |host|}}
+         - host: {{host}}
+      {{/each}}
   secureLogs:
     enabled: true
   env:
     - name: SPRING_PROFILES_ACTIVE
-      value: {{miljo}}gcp
+      value: {{springProfile}}
   envFrom:
     - secret: ba-statistikk-secrets
