@@ -38,4 +38,4 @@ management:
     base-path: "/internal"
   metrics.export.prometheus.enabled: true
 
-DB_ROLE: cloudsqlsuperuser
+DB_ROLE: familie-ba-statistikk-admin

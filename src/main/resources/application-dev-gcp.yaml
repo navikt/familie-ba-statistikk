@@ -9,3 +9,5 @@ spring:
     url: jdbc:postgresql://localhost:5432/familie-ba-statistikk
     username: ${DB_USERNAME}
     password: ${DB_PASSWORD}
+
+DB_ROLE: cloudsqlsuperuser
