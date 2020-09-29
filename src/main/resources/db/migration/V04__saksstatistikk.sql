@@ -1,0 +1,11 @@
+CREATE TABLE SAKSSTATISTIKK_DVH
+(
+    ID            BIGINT                              NOT NULL PRIMARY KEY,
+    OFFSET_VERDI  BIGINT                              NOT NULL,
+    TYPE          VARCHAR                             NOT NULL,
+    JSON          jsonb                               NOT NULL,
+    OPPRETTET_TID TIMESTAMP(3) DEFAULT LOCALTIMESTAMP NOT NULL,
+    ER_DUPLIKAT   BOOLEAN      DEFAULT FALSE
+);
+
+CREATE SEQUENCE SAKSSTATISTIKK_DVH_SEQ INCREMENT BY 50 START WITH 1000000 NO CYCLE;
