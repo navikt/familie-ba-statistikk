@@ -16,12 +16,22 @@
         <encoder class="net.logstash.logback.encoder.LogstashEncoder"/>
     </appender>
 
+    <appender name="secureLoggerRestAppender" class="no.nav.familie.ba.statistikk.SecureLoggerRestAppender">
+        <layout class="ch.qos.logback.contrib.json.classic.JsonLayout">
+            <jsonFormatter
+                    class="ch.qos.logback.contrib.jackson.JacksonJsonFormatter">
+                <prettyPrint>true</prettyPrint>
+            </jsonFormatter>
+            <timestampFormat>yyyy-MM-dd' 'HH:mm:ss.SSS</timestampFormat>
+        </layout>
+    </appender>
+
     <appender name="stdout_json" class="ch.qos.logback.core.ConsoleAppender">
         <encoder class="net.logstash.logback.encoder.LogstashEncoder"/>
     </appender>
 
     <logger name="secureLogger" level="INFO" additivity="false">
-        <appender-ref ref="secureLog"/>
+        <appender-ref ref="secureLoggerRestAppender"/>
     </logger>
 
     <root level="${ROOT_LOG_LEVEL:-INFO}">
