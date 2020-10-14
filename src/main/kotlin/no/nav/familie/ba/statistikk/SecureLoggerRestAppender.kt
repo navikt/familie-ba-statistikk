@@ -15,6 +15,7 @@ class SecureLoggerRestAppender<ILoggingEvent> : AppenderBase<ch.qos.logback.clas
     val client = HttpClient.newHttpClient()
 
     override fun append(eventObject: ch.qos.logback.classic.spi.ILoggingEvent) {
+        println("SECURE Starter appender")
         val message = layout.doLayout(eventObject)
 
 
@@ -24,8 +25,11 @@ class SecureLoggerRestAppender<ILoggingEvent> : AppenderBase<ch.qos.logback.clas
                 .header("Content-Type", "application/json")
                 .POST(HttpRequest.BodyPublishers.ofString(message))
                 .build()
+        print("SECURE prepost")
 
         val response: HttpResponse<String> = client.send(request, HttpResponse.BodyHandlers.ofString())
+
+        print("SECURE prepost ${response.statusCode()} ${response.body()} ${response.headers()}")
 
     }
 }
