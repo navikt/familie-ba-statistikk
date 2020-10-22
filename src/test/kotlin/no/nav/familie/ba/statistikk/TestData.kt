@@ -11,8 +11,8 @@ object TestData {
     fun vedtakDvh(): VedtakDVH {
         return VedtakDVH(fagsakId = "1",
                          behandlingsId = "1",
-                         tidspunktVedtak = LocalDate.now(),
-                         personIdent = "12345678910",
+                         tidspunktVedtak = ZonedDateTime.now(),
+                         person = PersonDVH("123","rolle", listOf(),"NOR","","",0,0,"12345","",""),
                          ensligForsørger = false,
                          kategori = Kategori.NASJONAL,
                          underkategori = Underkategori.ORDINÆR,
