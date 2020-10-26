@@ -6,6 +6,20 @@
               value="%d [%-5level] [%thread] %logger{5} %replace(- [%X{consumerId}, %X{callId}, %X{userId}] ){'- \[, , \] ',''}- %m%n"/>
     <include resource="org/springframework/boot/logging/logback/base.xml"/>
 
+    <appender name="secureLoggerRestAppender" class="no.nav.familie.ba.statistikk.SecureLoggerRestAppender">
+        <layout class="ch.qos.logback.contrib.json.classic.JsonLayout">
+        <jsonFormatter
+                class="ch.qos.logback.contrib.jackson.JacksonJsonFormatter">
+            <prettyPrint>true</prettyPrint>
+        </jsonFormatter>
+        <timestampFormat>yyyy-MM-dd' 'HH:mm:ss.SSS</timestampFormat>
+        </layout>
+    </appender>
+
+    <logger name="secureLogger" level="INFO" additivity="false">
+        <appender-ref ref="secureLoggerRestAppender"/>
+    </logger>
+
 
     <logger name="no.nav" level="INFO"/>
 </configuration>
