@@ -20,7 +20,7 @@
         <changelist>-SNAPSHOT</changelist>
         <jvmTarget>11</jvmTarget>
         <kotlin.version>1.4.10</kotlin.version>
-        <felles.version>1.20201102090652_49691c6</felles.version>
+        <felles.version>1.20201104091530_e00f4c4</felles.version>
         <felles-kontrakter.version>2.0_20201028143921_2f66133</felles-kontrakter.version>
         <familie.kontrakter.saksstatistikk>2.0_20201012132018_dc05978</familie.kontrakter.saksstatistikk>
         <familie.kontrakter.stønadsstatistikk>2.0_20201021122803_a1ef69e</familie.kontrakter.stønadsstatistikk>
