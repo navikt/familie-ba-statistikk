@@ -24,7 +24,7 @@
         <felles-kontrakter.version>2.0_20201028143921_2f66133</felles-kontrakter.version>
         <familie.kontrakter.saksstatistikk>2.0_20201110145948_2c83b39</familie.kontrakter.saksstatistikk>
         <familie.kontrakter.stønadsstatistikk>2.0_20201110145948_2c83b39</familie.kontrakter.stønadsstatistikk>
-        <spring-cloud.version>2.2.5.RELEASE</spring-cloud.version>
+        <spring-cloud.version>2.2.6.RELEASE</spring-cloud.version>
     </properties>
 
     <dependencies>
