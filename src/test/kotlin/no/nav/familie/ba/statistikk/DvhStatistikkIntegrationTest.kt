@@ -4,7 +4,6 @@ import com.fasterxml.jackson.core.JsonProcessingException
 import io.mockk.every
 import io.mockk.mockk
 import no.nav.familie.ba.statistikk.database.DbContainerInitializer
-import no.nav.familie.ba.statistikk.domene.SaksstatistikkDvhRepository
 import no.nav.familie.ba.statistikk.domene.VedtakDvhRepository
 import no.nav.familie.kontrakter.felles.objectMapper
 import org.apache.kafka.clients.consumer.ConsumerRecord
@@ -34,9 +33,6 @@ class DvhStatistikkIntegrationTest {
 
     @Autowired
     lateinit var vedtakKafkaConsumer: VedtakKafkaConsumer
-
-    @Autowired
-    lateinit var saksstatistikkDvhRepository: SaksstatistikkDvhRepository
 
     @Autowired
     lateinit var saksstatistikkBehandlingConsumer: SaksstatistikkBehandlingConsumer
@@ -102,17 +98,17 @@ class DvhStatistikkIntegrationTest {
     }
 
     @Test
-     fun `consume() skal kaste error hvis lagre() returnerer 0`() {
+    fun `consume() skal kaste error hvis lagre() returnerer 0`() {
         val repository: VedtakDvhRepository = mockk()
         every { repository.lagre(1, any(), any()) } returns 0
 
-         Assertions.assertThrows(IllegalStateException::class.java) {
-             VedtakKafkaConsumer(repository)
-                     .consume(lagConsumerRecord(TestData.vedtakDvh()), ack)
-         }
+        Assertions.assertThrows(IllegalStateException::class.java) {
+            VedtakKafkaConsumer(repository)
+                    .consume(lagConsumerRecord(TestData.vedtakDvh()), ack)
+        }
 
 
-     }
+    }
 
     @Test
     fun `consume() skal kaste error hvis json ikke er i henhold til kontrakt`() {
@@ -128,21 +124,13 @@ class DvhStatistikkIntegrationTest {
     }
 
     @Test
-    fun `consume() skal ikke kaste error hvis vi får inn ugyldig json`() {
-
-        Assertions.assertDoesNotThrow{
-                VedtakKafkaConsumer(vedtakDvhRepository).consume(lagConsumerRecord(""), ack)}
-
-    }
-
-    @Test
     fun `lagre() returverdi skal telle duplikater`() {
         val vedtak = TestData.vedtakDvh()
         val vedtakJson = objectMapper.writeValueAsString(vedtak)
-        Assertions.assertEquals(1, vedtakDvhRepository.lagre(1, vedtak.behandlingsId, vedtakJson))
-        Assertions.assertEquals(2, vedtakDvhRepository.lagre(1, vedtak.behandlingsId, vedtakJson))
-        Assertions.assertEquals(3, vedtakDvhRepository.lagre(1, vedtak.behandlingsId, vedtakJson))
-        Assertions.assertEquals(1, vedtakDvhRepository.lagre(1, vedtak.copy(behandlingsId = "2").behandlingsId,
+        Assertions.assertEquals(1, vedtakDvhRepository.lagre(1, vedtak, vedtakJson))
+        Assertions.assertEquals(2, vedtakDvhRepository.lagre(1, vedtak, vedtakJson))
+        Assertions.assertEquals(3, vedtakDvhRepository.lagre(1, vedtak, vedtakJson))
+        Assertions.assertEquals(1, vedtakDvhRepository.lagre(1, vedtak.copy(behandlingsId = "2"),
                                                              vedtakJson))
     }
 
@@ -151,7 +139,7 @@ class DvhStatistikkIntegrationTest {
         val vedtak = TestData.vedtakDvh()
         val vedtakJson = "FOO"
         Assertions.assertThrows(DataIntegrityViolationException::class.java) {
-            vedtakDvhRepository.lagre(1, vedtak.behandlingsId, vedtakJson)
+            vedtakDvhRepository.lagre(1, vedtak, vedtakJson)
         }
     }
 

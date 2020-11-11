@@ -1,0 +1,10 @@
+ALTER TABLE VEDTAK_DVH
+    ADD COLUMN FUNKSJONELL_ID VARCHAR;
+
+UPDATE VEDTAK_DVH SET FUNKSJONELL_ID = CONCAT( vedtak_json ->> 'fagsakId', '-', vedtak_json ->> 'behandlingsId');
+
+
+ALTER TABLE VEDTAK_DVH
+    ALTER COLUMN FUNKSJONELL_ID set not null;
+
+

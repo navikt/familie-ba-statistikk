@@ -11,6 +11,7 @@ object TestData {
     fun vedtakDvh(): VedtakDVH {
         return VedtakDVH(fagsakId = "1",
                          behandlingsId = "1",
+                         funksjonellId = "funksjonellId",
                          tidspunktVedtak = ZonedDateTime.now(),
                          person = PersonDVH("123","rolle", listOf(),"NOR","","",0,0,"12345","",""),
                          ensligForsørger = false,
@@ -30,6 +31,7 @@ object TestData {
         return SakDVH(funksjonellTid = ZonedDateTime.now(),
                       tekniskTid = ZonedDateTime.now(),
                       opprettetDato = LocalDate.now(),
+                      funksjonellId = "funksjonellId",
                       sakId = "1",
                       aktorId = 1234567891011,
                       sakStatus = "OPPRETTET",
@@ -44,6 +46,7 @@ object TestData {
                              mottattDato = ZonedDateTime.now(),
                              registrertDato = ZonedDateTime.now(),
                              behandlingId = "behandling.id.toString()",
+                             funksjonellId = "funksjonellId",
                              sakId = "behandling.fagsak.id.toString()",
                              behandlingType = "behandling.type.name",
                              behandlingStatus = "behandling.status.name",
