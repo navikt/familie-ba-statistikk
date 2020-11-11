@@ -25,19 +25,19 @@ class VedtakKafkaConsumer(private val vedtakDvhRepository: VedtakDvhRepository) 
         try {
             val vedtak = cr.value()
 
-            vedtakDvhRepository.lagre(cr.offset(), cr.key(), vedtak).apply {
+            //valider at meldingen lar seg deserialisere
+            val vedtakDVH = objectMapper.readValue(vedtak, VedtakDVH::class.java)
+
+            vedtakDvhRepository.lagre(cr.offset(), vedtakDVH, vedtak).apply {
                 when {
-                    this == 1 -> logger.info("Nytt vedtak mottatt og lagret.")
+                    this == 1 -> secureLogger.info("Vedtak mottatt og lagret: $vedtak")
                     this > 1 -> logger.error("Vedtak mottatt på nytt. Lagret, merket som duplikat. offset=${cr.offset()} key=${cr.key()}")
                     else -> throw error("Lagring av nytt vedtak mislyktes! offset=${cr.offset()} key=${cr.key()}")
                 }
             }
 
 
-            secureLogger.info("Vedtak mottatt og lagret: $vedtak")
 
-            //valider at meldingen lar seg deserialisere
-            objectMapper.readValue(vedtak, VedtakDVH::class.java)
 
         } catch (up: Exception) {
             handleException(up, cr, logger, "VEDTAK")

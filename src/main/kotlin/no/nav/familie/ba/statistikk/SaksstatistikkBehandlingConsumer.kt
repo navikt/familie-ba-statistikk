@@ -25,12 +25,16 @@ class SaksstatistikkBehandlingConsumer(private val saksstatistikkDvhRepository: 
         try {
             val json = cr.value()
 
-            saksstatistikkDvhRepository.lagre("BEHANDLING", cr.offset(), json)
-
-            secureLogger.info("Saksstatistikk-behandling mottatt og lagret: $json")
-
             //valider at meldingen lar seg deserialisere
-            objectMapper.readValue(json, BehandlingDVH::class.java)
+            val behandlingDVH = objectMapper.readValue(json, BehandlingDVH::class.java)
+            saksstatistikkDvhRepository.lagre("BEHANDLING", cr.offset(), json, behandlingDVH.funksjonellId).apply {
+                when {
+                    this == 1 -> secureLogger.info("Saksstatistikk-behandling mottatt og lagret: $json")
+                    this > 1 -> logger.error("Saksstatistikk-behandling mottatt på nytt. Lagret, merket som duplikat. offset=${cr.offset()} key=${cr.key()}")
+                    else -> throw error("Lagring av nytt Saksstatistikk-behandling mislyktes! offset=${cr.offset()} key=${cr.key()}")
+                }
+            }
+
 
         } catch (up: Exception) {
             handleException(up, cr, logger, "BEHANDLING")

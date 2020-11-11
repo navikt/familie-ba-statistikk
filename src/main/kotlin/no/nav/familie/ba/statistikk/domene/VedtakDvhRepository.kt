@@ -8,14 +8,16 @@ import org.springframework.stereotype.Repository
 @Repository
 class VedtakDvhRepository(private val jdbcTemplate: NamedParameterJdbcTemplate) {
 
-    fun lagre(offset: Long, behandlingId: String, vedtakJson: String): Int {
+    fun lagre(offset: Long, vedtakDVH: VedtakDVH, vedtakJson: String): Int {
         val sql =
-                "insert into VEDTAK_DVH(ID, VEDTAK_JSON, ER_DUPLIKAT, OFFSET_VERDI) values (nextval('VEDTAK_DVH_SEQ'), to_json(:jsontext::json), :duplikat, :offset)"
-        val antallVedtak = antallVedtakMed(behandlingId)
+                "insert into VEDTAK_DVH(ID, VEDTAK_JSON, ER_DUPLIKAT, OFFSET_VERDI, FUNKSJONELL_ID) " +
+                "values (nextval('VEDTAK_DVH_SEQ'), to_json(:jsontext::json), :duplikat, :offset, :funksjonellId)"
+        val antallVedtak = antallVedtakMed(vedtakDVH.behandlingsId)
         val parameters = MapSqlParameterSource()
                 .addValue("jsontext", vedtakJson)
                 .addValue("offset", offset)
                 .addValue("duplikat", antallVedtak > 0)
+                .addValue("funksjonellId", vedtakDVH.funksjonellId)
 
         return jdbcTemplate.update(sql, parameters) + antallVedtak
     }
