@@ -1,4 +1,5 @@
 FROM navikt/java:11
+RUN apt-get update
 RUN apt-get -yy install kafkacat
 
 COPY ./target/familie-ba-statistikk.jar "app.jar"
