@@ -35,10 +35,7 @@ class SaksstatistikkSakConsumer(private val saksstatistikkDvhRepository: Sakssta
                 }
             }
 
-
-
-
-
+            validerSakDvhMotJsonSchema(json)
         } catch (up: Exception) {
             handleException(up, cr, logger, "SAK")
         }
