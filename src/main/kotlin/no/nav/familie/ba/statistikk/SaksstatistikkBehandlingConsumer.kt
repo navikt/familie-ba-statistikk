@@ -34,6 +34,7 @@ class SaksstatistikkBehandlingConsumer(private val saksstatistikkDvhRepository: 
                     else -> throw error("Lagring av nytt Saksstatistikk-behandling mislyktes! offset=${cr.offset()} key=${cr.key()}")
                 }
             }
+            validerBehandlingDvhMotJsonSchema(json)
 
 
         } catch (up: Exception) {
