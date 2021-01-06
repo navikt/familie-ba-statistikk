@@ -1,7 +1,6 @@
 package no.nav.familie.ba.statistikk
 
 import ch.qos.logback.core.AppenderBase
-import ch.qos.logback.core.Layout
 import no.nav.familie.kontrakter.felles.objectMapper
 import java.net.URI
 import java.net.http.HttpClient
@@ -11,31 +10,30 @@ import java.time.Duration
 
 class SecureLoggerRestAppender : AppenderBase<ch.qos.logback.classic.spi.ILoggingEvent>() {
 
-    lateinit var layout: Layout<ch.qos.logback.classic.spi.ILoggingEvent>
-
     val client = HttpClient.newHttpClient()
 
     override fun append(eventObject: ch.qos.logback.classic.spi.ILoggingEvent) {
-        println("Skriver til sikkerlogg")
-
         var logEvent = mutableMapOf<String, String>()
         logEvent["message"] = eventObject.message
         logEvent["level"] = eventObject.level.levelStr
         logEvent["thread"] = eventObject.threadName
-        val t = eventObject.throwableProxy
-        if (t != null) {
-            val ste = t.stackTraceElementProxyArray
+        val iThrowableProxy = eventObject.throwableProxy
 
-            var sb = StringBuffer()
 
+        if (iThrowableProxy != null) {
+            var sb = StringBuilder()
+            sb.appendLine("${iThrowableProxy.className}: ${iThrowableProxy.message}")
+
+            val ste = iThrowableProxy.stackTraceElementProxyArray
             for (i in ste) {
                 sb.appendLine(i.steAsString)
             }
 
+            val stackTrace = "${iThrowableProxy.className}: ${iThrowableProxy.message} ${
+                iThrowableProxy.stackTraceElementProxyArray.joinToString { "${it.steAsString}\n" }
+            }"
 
-
-            logEvent["stack_trace"] = sb.toString()
-            logEvent["exception"] = t.className
+            logEvent["stack_trace"] = stackTrace
         }
 
         val mdc = eventObject.mdcPropertyMap
@@ -53,7 +51,8 @@ class SecureLoggerRestAppender : AppenderBase<ch.qos.logback.classic.spi.ILoggin
 
         val response: HttpResponse<String> = client.send(request, HttpResponse.BodyHandlers.ofString())
 
-        println("Response fra POST sikkerlog: ${response.statusCode()} ${response.body()} ${response.headers()}")
-
+        if (response.statusCode() != 200) {
+            println("ERROR ved posting av melding til secureLog ${response.statusCode()} ${response.body()} ${response.headers()}")
+        }
     }
 }
