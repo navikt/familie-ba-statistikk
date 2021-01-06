@@ -10,34 +10,28 @@ import java.time.Duration
 
 class SecureLoggerRestAppender : AppenderBase<ch.qos.logback.classic.spi.ILoggingEvent>() {
 
-    val client = HttpClient.newHttpClient()
+    private val client: HttpClient = HttpClient.newHttpClient()
 
     override fun append(eventObject: ch.qos.logback.classic.spi.ILoggingEvent) {
-        var logEvent = mutableMapOf<String, String>()
+        val logEvent = mutableMapOf<String, String>()
         logEvent["message"] = eventObject.message
         logEvent["level"] = eventObject.level.levelStr
         logEvent["thread"] = eventObject.threadName
         val iThrowableProxy = eventObject.throwableProxy
 
-
         if (iThrowableProxy != null) {
-            var sb = StringBuilder()
-            sb.appendLine("${iThrowableProxy.className}: ${iThrowableProxy.message}")
-
-            val ste = iThrowableProxy.stackTraceElementProxyArray
-            for (i in ste) {
-                sb.appendLine(i.steAsString)
-            }
-
-            val stackTrace = "${iThrowableProxy.className}: ${iThrowableProxy.message} ${
-                iThrowableProxy.stackTraceElementProxyArray.joinToString { "${it.steAsString}\n" }
-            }"
+            val stackTrace = "${iThrowableProxy.className}: ${iThrowableProxy.message}\n" +
+                    "${
+                        iThrowableProxy
+                            .stackTraceElementProxyArray
+                            .joinToString { "${it.steAsString}\n" }
+                    }"
 
             logEvent["stack_trace"] = stackTrace
         }
 
         val mdc = eventObject.mdcPropertyMap
-        mdc.forEach { k, v ->
+        mdc.forEach { (k, v) ->
             logEvent[k] = v
         }
 
@@ -52,7 +46,10 @@ class SecureLoggerRestAppender : AppenderBase<ch.qos.logback.classic.spi.ILoggin
         val response: HttpResponse<String> = client.send(request, HttpResponse.BodyHandlers.ofString())
 
         if (response.statusCode() != 200) {
-            println("ERROR ved posting av melding til secureLog ${response.statusCode()} ${response.body()} ${response.headers()}")
+            println(
+                "ERROR ved posting av melding til secureLog ${response.statusCode()} " +
+                        "${response.body()} ${response.headers()}"
+            )
         }
     }
 }

@@ -8,10 +8,12 @@ import java.util.*
 
 
 @Service
+@Deprecated("Midlertidig service for test")
 class SecurelogService {
 
     private val logger = LoggerFactory.getLogger(this::class.java)
     private val secureLogger = LoggerFactory.getLogger("secureLogger")
+
 
     @Scheduled(fixedDelay = 60000*60)
     fun secureLog() {
