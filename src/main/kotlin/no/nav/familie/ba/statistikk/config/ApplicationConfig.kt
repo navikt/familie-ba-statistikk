@@ -7,10 +7,12 @@ import org.springframework.boot.context.properties.ConfigurationPropertiesScan
 import org.springframework.boot.web.servlet.FilterRegistrationBean
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.ComponentScan
+import org.springframework.scheduling.annotation.EnableScheduling
 
 @SpringBootConfiguration
 @ConfigurationPropertiesScan
 @ComponentScan(ApplicationConfig.pakkenavn)
+@EnableScheduling
 class ApplicationConfig {
 
     @Bean
