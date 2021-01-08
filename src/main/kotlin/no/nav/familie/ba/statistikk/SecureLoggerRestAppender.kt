@@ -1,7 +1,7 @@
 package no.nav.familie.ba.statistikk
 
 import ch.qos.logback.core.AppenderBase
-import no.nav.familie.kontrakter.felles.objectMapper
+import com.fasterxml.jackson.databind.ObjectMapper
 import java.net.URI
 import java.net.http.HttpClient
 import java.net.http.HttpRequest
@@ -11,6 +11,7 @@ import java.time.Duration
 class SecureLoggerRestAppender : AppenderBase<ch.qos.logback.classic.spi.ILoggingEvent>() {
 
     private val client: HttpClient = HttpClient.newHttpClient()
+    private val objectMapper = ObjectMapper()
 
     override fun append(eventObject: ch.qos.logback.classic.spi.ILoggingEvent) {
         val logEvent = mutableMapOf<String, String>()
