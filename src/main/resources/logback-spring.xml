@@ -3,7 +3,7 @@
     <property name="ROOT_LOG_LEVEL" value="INFO"/>
 
     <!-- Logger for sensitive data -->
-    <appender name="secureLoggerRestAppender" class="no.nav.familie.ba.statistikk.SecureLoggerRestAppender"/>
+    <appender name="secureLoggerRestAppender" class="no.nav.familie.log.appender.SecureLoggerRestAppender"/>
 
     <appender name="stdout_json" class="ch.qos.logback.core.ConsoleAppender">
         <encoder class="net.logstash.logback.encoder.LogstashEncoder"/>
