@@ -2,6 +2,7 @@ package no.nav.familie.ba.statistikk
 
 import no.nav.familie.eksterne.kontrakter.*
 import no.nav.familie.eksterne.kontrakter.saksstatistikk.BehandlingDVH
+import no.nav.familie.eksterne.kontrakter.saksstatistikk.ResultatBegrunnelseDVH
 import no.nav.familie.eksterne.kontrakter.saksstatistikk.SakDVH
 import java.time.LocalDate
 import java.time.ZonedDateTime
@@ -36,29 +37,38 @@ object TestData {
                       aktorId = 1234567891011,
                       sakStatus = "OPPRETTET",
                       avsender = "VL",
-                      versjon = "1"
+                      versjon = "1",
+                      bostedsland = "NOR"
         )
     }
 
     fun behandlingDvh(): BehandlingDVH {
-        return BehandlingDVH(funksjonellTid = ZonedDateTime.now(),
-                             tekniskTid = ZonedDateTime.now(),
-                             mottattDato = ZonedDateTime.now(),
-                             registrertDato = ZonedDateTime.now(),
-                             behandlingId = "behandling.id.toString()",
-                             funksjonellId = "funksjonellId",
-                             sakId = "behandling.fagsak.id.toString()",
-                             behandlingType = "behandling.type.name",
-                             behandlingStatus = "behandling.status.name",
-                             utenlandstilsnitt = "NASJONAL",
-                             ansvarligEnhetKode = "ansvarligEnhetKode",
-                             behandlendeEnhetKode = "behandlendeEnhetsKode",
-                             ansvarligEnhetType = "NORG",
-                             behandlendeEnhetType = "NORG",
-                             totrinnsbehandling = true,
-                             avsender = "familie-ba-sak",
-                             versjon = "2",
-                             behandlingKategori = "EØS",
-                             behandlingUnderkategori = "ORDINÆR")
+        return BehandlingDVH(
+                funksjonellTid = ZonedDateTime.now(),
+                tekniskTid = ZonedDateTime.now(),
+                mottattDato = ZonedDateTime.now(),
+                registrertDato = ZonedDateTime.now(),
+                behandlingId = "behandling.id.toString()",
+                funksjonellId = "funksjonellId",
+                sakId = "behandling.fagsak.id.toString()",
+                behandlingType = "behandling.type.name",
+                behandlingStatus = "behandling.status.name",
+                utenlandstilsnitt = "NASJONAL",
+                ansvarligEnhetKode = "ansvarligEnhetKode",
+                behandlendeEnhetKode = "behandlendeEnhetsKode",
+                ansvarligEnhetType = "NORG",
+                behandlendeEnhetType = "NORG",
+                totrinnsbehandling = true,
+                avsender = "familie-ba-sak",
+                versjon = "2",
+                behandlingKategori = "EØS",
+                behandlingUnderkategori = "ORDINÆR",
+                behandlingAarsak = "SØKNAD",
+                automatiskBehandlet = false,
+                resultatBegrunnelser = listOf(ResultatBegrunnelseDVH(LocalDate.now(),
+                                                                     LocalDate.now().plusYears(1),
+                                                                     "INNVILGELSE",
+                                                                     "INNVILGET_BOSTATT_I_RIKET"))
+        )
     }
 }
