@@ -60,6 +60,8 @@ object TestData {
                              avsender = "familie-ba-sak",
                              versjon = "2",
                              behandlingKategori = "EØS",
-                             behandlingUnderkategori = "ORDINÆR")
+                             behandlingUnderkategori = "ORDINÆR",
+                             automatiskBehandlet = false,
+                             behandlingAarsak = "SOKNAD")
     }
 }
