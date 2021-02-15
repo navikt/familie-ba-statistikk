@@ -36,7 +36,8 @@ object TestData {
                       aktorId = 1234567891011,
                       sakStatus = "OPPRETTET",
                       avsender = "VL",
-                      versjon = "1"
+                      versjon = "1",
+                      bostedsland = "NOR"
         )
     }
 
