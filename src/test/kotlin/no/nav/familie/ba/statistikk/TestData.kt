@@ -2,6 +2,7 @@ package no.nav.familie.ba.statistikk
 
 import no.nav.familie.eksterne.kontrakter.*
 import no.nav.familie.eksterne.kontrakter.saksstatistikk.BehandlingDVH
+import no.nav.familie.eksterne.kontrakter.saksstatistikk.ResultatBegrunnelseDVH
 import no.nav.familie.eksterne.kontrakter.saksstatistikk.SakDVH
 import java.time.LocalDate
 import java.time.ZonedDateTime
@@ -61,7 +62,12 @@ object TestData {
                              versjon = "2",
                              behandlingKategori = "EØS",
                              behandlingUnderkategori = "ORDINÆR",
+                             behandlingAarsak = "SØKNAD",
                              automatiskBehandlet = false,
-                             behandlingAarsak = "SOKNAD")
+                             resultatBegrunnelser = listOf(ResultatBegrunnelseDVH(LocalDate.now(),
+                                                                                  LocalDate.now().plusYears(1),
+                                                                                  "INNVILGELSE",
+                                                                                  "INNVILGET_BOSTATT_I_RIKET"))
+        )
     }
 }
