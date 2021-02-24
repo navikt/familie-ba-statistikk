@@ -38,7 +38,7 @@ object TestData {
                       sakStatus = "OPPRETTET",
                       avsender = "VL",
                       versjon = "1",
-                      bostedsland = "NOR"
+                      bostedsland = "NO"
         )
     }
 

@@ -23,7 +23,7 @@ class SaksstatistikkBehandlingConsumer(private val saksstatistikkDvhRepository: 
     @Transactional
     fun consume(cr: ConsumerRecord<String, String>, ack: Acknowledgment) {
         try {
-            logger.info("[${BEHANDLING}] Melding mottatt. offset=${cr.offset()}, key=${cr.key()}")
+            logger.info("[${BEHANDLING}] Melding mottatt. offset=${cr.offset()}, key=${cr.key()}, versjon=${objectMapper.readTree(cr.value()).get("versjon")}")
             secureLogger.info("[${BEHANDLING}] Melding mottatt. offset=${cr.offset()}, key=${cr.key()}, melding=${cr.value()}")
 
             val json = cr.value()
