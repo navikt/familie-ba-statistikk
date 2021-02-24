@@ -62,12 +62,6 @@ object TestData {
                              versjon = "2",
                              behandlingKategori = "EØS",
                              behandlingUnderkategori = "ORDINÆR",
-                             behandlingAarsak = "SØKNAD",
-                             automatiskBehandlet = false,
-                             resultatBegrunnelser = listOf(ResultatBegrunnelseDVH(LocalDate.now(),
-                                                                                  LocalDate.now().plusYears(1),
-                                                                                  "INNVILGELSE",
-                                                                                  "INNVILGET_BOSTATT_I_RIKET"))
         )
     }
 }
