@@ -19,11 +19,11 @@
         <sha1></sha1>
         <changelist>-SNAPSHOT</changelist>
         <jvmTarget>11</jvmTarget>
-        <kotlin.version>1.4.21-2</kotlin.version>
+        <kotlin.version>1.4.32</kotlin.version>
         <felles.version>1.20210208115050_88991d1</felles.version>
         <felles-kontrakter.version>2.0_20210122103953_cb55034</felles-kontrakter.version>
-        <familie.kontrakter.saksstatistikk>2.0_20201110145948_2c83b39</familie.kontrakter.saksstatistikk>
-        <familie.kontrakter.stønadsstatistikk>2.0_20201124122241_0f9f95a</familie.kontrakter.stønadsstatistikk>
+        <familie.kontrakter.saksstatistikk>2.0_20210211132003_f81111d</familie.kontrakter.saksstatistikk>
+        <familie.kontrakter.stønadsstatistikk>2.0_20210201142541_5c3705c</familie.kontrakter.stønadsstatistikk>
         <spring-cloud.version>2.2.6.RELEASE</spring-cloud.version>
     </properties>
 
