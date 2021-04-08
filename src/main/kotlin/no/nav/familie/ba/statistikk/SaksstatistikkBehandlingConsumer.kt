@@ -23,11 +23,14 @@ class SaksstatistikkBehandlingConsumer(private val saksstatistikkDvhRepository: 
     @Transactional
     fun consume(cr: ConsumerRecord<String, String>, ack: Acknowledgment) {
         try {
+            logger.info("[${BEHANDLING}] Melding mottatt. offset=${cr.offset()}, key=${cr.key()}")
+            secureLogger.info("[${BEHANDLING}] Melding mottatt. offset=${cr.offset()}, key=${cr.key()}, melding=${cr.value()}")
+
             val json = cr.value()
 
             //valider at meldingen lar seg deserialisere
             val behandlingDVH = objectMapper.readValue(json, BehandlingDVH::class.java)
-            saksstatistikkDvhRepository.lagre("BEHANDLING", cr.offset(), json, behandlingDVH.funksjonellId).apply {
+            saksstatistikkDvhRepository.lagre(BEHANDLING, cr.offset(), json, behandlingDVH.funksjonellId).apply {
                 when {
                     this == 1 -> secureLogger.info("Saksstatistikk-behandling mottatt og lagret: $json")
                     this > 1 -> logger.error("Saksstatistikk-behandling mottatt på nytt. Lagret, merket som duplikat. offset=${cr.offset()} key=${cr.key()}")
@@ -38,8 +41,12 @@ class SaksstatistikkBehandlingConsumer(private val saksstatistikkDvhRepository: 
 
 
         } catch (up: Exception) {
-            handleException(up, cr, logger, "BEHANDLING")
+            handleException(up, cr, logger, BEHANDLING)
         }
         ack.acknowledge()
+    }
+
+    companion object {
+        private const val BEHANDLING = "BEHANDLING"
     }
 }

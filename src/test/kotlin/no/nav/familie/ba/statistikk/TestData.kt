@@ -2,6 +2,7 @@ package no.nav.familie.ba.statistikk
 
 import no.nav.familie.eksterne.kontrakter.*
 import no.nav.familie.eksterne.kontrakter.saksstatistikk.BehandlingDVH
+import no.nav.familie.eksterne.kontrakter.saksstatistikk.ResultatBegrunnelseDVH
 import no.nav.familie.eksterne.kontrakter.saksstatistikk.SakDVH
 import java.time.LocalDate
 import java.time.ZonedDateTime
@@ -36,7 +37,8 @@ object TestData {
                       aktorId = 1234567891011,
                       sakStatus = "OPPRETTET",
                       avsender = "VL",
-                      versjon = "1"
+                      versjon = "1",
+                      bostedsland = "NOR"
         )
     }
 
@@ -59,6 +61,13 @@ object TestData {
                              avsender = "familie-ba-sak",
                              versjon = "2",
                              behandlingKategori = "EØS",
-                             behandlingUnderkategori = "ORDINÆR")
+                             behandlingUnderkategori = "ORDINÆR",
+                             behandlingAarsak = "SØKNAD",
+                             automatiskBehandlet = false,
+                             resultatBegrunnelser = listOf(ResultatBegrunnelseDVH(LocalDate.now(),
+                                                                                  LocalDate.now().plusYears(1),
+                                                                                  "INNVILGELSE",
+                                                                                  "INNVILGET_BOSTATT_I_RIKET"))
+        )
     }
 }

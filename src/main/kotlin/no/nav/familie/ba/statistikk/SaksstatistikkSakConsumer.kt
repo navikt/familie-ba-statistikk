@@ -23,11 +23,14 @@ class SaksstatistikkSakConsumer(private val saksstatistikkDvhRepository: Sakssta
     @Transactional
     fun consume(cr: ConsumerRecord<String, String>, ack: Acknowledgment) {
         try {
+            logger.info("[${SAK}] Melding mottatt. offset=${cr.offset()}, key=${cr.key()}")
+            secureLogger.info("[${SAK}] Melding mottatt. offset=${cr.offset()}, key=${cr.key()}, melding=${cr.value()}")
+
             val json = cr.value()
 
             //valider at meldingen lar seg deserialisere
             val sakDVH = objectMapper.readValue(json, SakDVH::class.java)
-            saksstatistikkDvhRepository.lagre("SAK", cr.offset(), json, sakDVH.funksjonellId).apply {
+            saksstatistikkDvhRepository.lagre(SAK, cr.offset(), json, sakDVH.funksjonellId).apply {
                 when {
                     this == 1 -> secureLogger.info("Saksstatistikk-sak mottatt og lagret: $json")
                     this > 1 -> logger.error("Saksstatistikk-sak mottatt på nytt. Lagret, merket som duplikat. offset=${cr.offset()} key=${cr.key()}")
@@ -37,10 +40,13 @@ class SaksstatistikkSakConsumer(private val saksstatistikkDvhRepository: Sakssta
 
             validerSakDvhMotJsonSchema(json)
         } catch (up: Exception) {
-            handleException(up, cr, logger, "SAK")
+            handleException(up, cr, logger, SAK)
         }
         ack.acknowledge()
     }
 
+    companion object {
+        private const val SAK = "SAK"
+    }
 
 }
