@@ -3,7 +3,6 @@ on:
   pull_request_target:
     types: [ opened, synchronize, reopened, ready_for_review ]
   workflow_dispatch:
-  push:
 env:
   IMAGE: docker.pkg.github.com/${{ github.repository }}/familie-ba-statistikk:${{ github.sha }}
   IMAGE_LATEST: docker.pkg.github.com/${{ github.repository }}/familie-ba-statistikk:latest
