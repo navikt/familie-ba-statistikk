@@ -19,12 +19,12 @@
         <sha1></sha1>
         <changelist>-SNAPSHOT</changelist>
         <jvmTarget>11</jvmTarget>
-        <kotlin.version>1.4.32</kotlin.version>
+        <kotlin.version>1.5.0</kotlin.version>
         <felles.version>1.20210208115050_88991d1</felles.version>
         <felles-kontrakter.version>2.0_20210202101640_559def4</felles-kontrakter.version>
         <familie.kontrakter.saksstatistikk>2.0_20210427132344_d9066f5</familie.kontrakter.saksstatistikk>
-        <familie.kontrakter.stønadsstatistikk>2.0_20210308175935_c37b350</familie.kontrakter.stønadsstatistikk>
-        <spring-cloud.version>2.2.6.RELEASE</spring-cloud.version>
+        <familie.kontrakter.stønadsstatistikk>2.0_20210429143557_6cff407</familie.kontrakter.stønadsstatistikk>
+        <spring-cloud.version>3.0.2</spring-cloud.version>
     </properties>
 
     <dependencies>
@@ -62,6 +62,16 @@
             <artifactId>spring-boot-starter-validation</artifactId>
         </dependency>
         <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-bootstrap</artifactId>
+            <version>${spring-cloud.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-vault-config</artifactId>
+            <version>${spring-cloud.version}</version>
+        </dependency>
+        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
@@ -86,7 +96,7 @@
         <dependency>
             <groupId>org.springframework.vault</groupId>
             <artifactId>spring-vault-core</artifactId>
-            <version>2.2.3.RELEASE</version>
+            <version>2.3.2</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.cloud</groupId>
