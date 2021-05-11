@@ -19,7 +19,7 @@
         <sha1></sha1>
         <changelist>-SNAPSHOT</changelist>
         <jvmTarget>11</jvmTarget>
-        <kotlin.version>1.4.32</kotlin.version>
+        <kotlin.version>1.5.0</kotlin.version>
         <felles.version>1.20210208115050_88991d1</felles.version>
         <felles-kontrakter.version>2.0_20210202101640_559def4</felles-kontrakter.version>
         <familie.kontrakter.saksstatistikk>2.0_20210427132344_d9066f5</familie.kontrakter.saksstatistikk>
