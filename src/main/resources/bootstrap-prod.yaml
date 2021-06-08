@@ -22,5 +22,5 @@ spring:
       generic:
         enabled: true
         backend: kv/prod/fss
-        application-name: familie-ba-statistikk/default
-        default-context: familie-ba-statistikk/default
+        application-name: familie-ba-statistikk/teamfamilie
+        default-context: familie-ba-statistikk/teamfamilie
