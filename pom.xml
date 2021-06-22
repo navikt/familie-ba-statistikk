@@ -20,8 +20,8 @@
         <changelist>-SNAPSHOT</changelist>
         <jvmTarget>11</jvmTarget>
         <kotlin.version>1.5.10</kotlin.version>
-        <felles.version>1.20210208115050_88991d1</felles.version>
-        <felles-kontrakter.version>2.0_20210202101640_559def4</felles-kontrakter.version>
+        <felles.version>1.20210607085527_b0c86f4</felles.version>
+        <felles-kontrakter.version>2.0_20210621140151_0c7f2bb</felles-kontrakter.version>
         <familie.kontrakter.saksstatistikk>2.0_20210427132344_d9066f5</familie.kontrakter.saksstatistikk>
         <familie.kontrakter.stønadsstatistikk>2.0_20210429143557_6cff407</familie.kontrakter.stønadsstatistikk>
         <spring-cloud.version>3.0.3</spring-cloud.version>
@@ -110,7 +110,7 @@
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
-            <version>42.2.20</version>
+            <version>42.2.22</version>
         </dependency>
         <dependency>
             <groupId>com.h2database</groupId>
