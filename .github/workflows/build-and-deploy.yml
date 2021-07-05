@@ -1,7 +1,8 @@
 name: Build-Deploy-Preprod
 on:
-  pull_request_target:
-    types: [ opened, synchronize, reopened, ready_for_review ]
+  push:
+    branches-ignore:
+      - 'master'
   workflow_dispatch:
 env:
   IMAGE: docker.pkg.github.com/${{ github.repository }}/familie-ba-statistikk:${{ github.sha }}
