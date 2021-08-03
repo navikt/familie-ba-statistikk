@@ -41,3 +41,14 @@ spec:
   env:
     - name: SPRING_PROFILES_ACTIVE
       value: preprod
+  accessPolicy:
+    inbound:
+      rules:
+        - application: familie-ba-sak
+          namespace: teamfamilie
+          cluster: dev-fss
+  azure:
+    application:
+      enabled: true
+      tenant: trygdeetaten.no
+  webproxy: true
