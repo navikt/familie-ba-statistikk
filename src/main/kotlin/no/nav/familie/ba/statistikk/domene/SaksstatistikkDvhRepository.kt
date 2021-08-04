@@ -30,4 +30,13 @@ class SaksstatistikkDvhRepository(private val jdbcTemplate: NamedParameterJdbcTe
                                            parameters,
                                            Int::class.java)!!
     }
+
+    fun hent(offset: Long): String {
+        val parameters = MapSqlParameterSource().addValue("offset", offset)
+
+        return jdbcTemplate.queryForObject("""SELECT s.json FROM saksstatistikk_dvh s WHERE s.offset_verdi = :offset
+                                                   AND s.type = 'SAK'""",
+                                           parameters,
+                                           String::class.java)!!
+    }
 }
