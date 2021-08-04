@@ -15,6 +15,11 @@ class SaksstatistikkController(val saksstatistikkDvhRepository: SaksstatistikkDv
 
     @GetMapping("/sak/{offset}")
     fun sak(@PathVariable offset: Long) : String {
-        return saksstatistikkDvhRepository.hent(offset)
+        return saksstatistikkDvhRepository.hent("SAK", offset)
+    }
+
+    @GetMapping("/behandling/{offset}")
+    fun behandling(@PathVariable offset: Long): String {
+        return saksstatistikkDvhRepository.hent("BEHANDLING", offset)
     }
 }
