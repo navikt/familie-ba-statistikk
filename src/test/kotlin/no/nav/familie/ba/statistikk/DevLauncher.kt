@@ -9,6 +9,7 @@ class DevLauncher
 
 
 fun main(args: Array<String>) {
+    System.setProperty("spring.profiles.active", "dev")
     val springApp = SpringApplication(DevLauncher::class.java)
     springApp.setAdditionalProfiles("dev")
     springApp.run(*args)
