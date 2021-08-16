@@ -19,12 +19,13 @@
         <sha1></sha1>
         <changelist>-SNAPSHOT</changelist>
         <jvmTarget>11</jvmTarget>
-        <kotlin.version>1.5.20</kotlin.version>
-        <felles.version>1.20210622070350_4e193f0</felles.version>
-        <felles-kontrakter.version>2.0_20210702090640_910cb74</felles-kontrakter.version>
+        <kotlin.version>1.5.21</kotlin.version>
+        <felles.version>1.20210811153830_2af1096</felles.version>
+        <felles-kontrakter.version>2.0_20210811154304_a9ff916</felles-kontrakter.version>
         <familie.kontrakter.saksstatistikk>2.0_20210427132344_d9066f5</familie.kontrakter.saksstatistikk>
         <familie.kontrakter.stønadsstatistikk>2.0_20210629091138_139806e</familie.kontrakter.stønadsstatistikk>
         <spring-cloud.version>3.0.3</spring-cloud.version>
+        <token-validation-spring.version>1.3.8</token-validation-spring.version>
     </properties>
 
     <dependencies>
@@ -87,11 +88,24 @@
             <artifactId>spring-kafka</artifactId>
         </dependency>
 
+
+        <dependency>
+            <groupId>no.nav.security</groupId>
+            <artifactId>token-validation-spring</artifactId>
+            <version>${token-validation-spring.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>no.nav.security</groupId>
+            <artifactId>token-validation-test-support</artifactId>
+            <version>${token-validation-spring.version}</version>
+            <scope>test</scope>
+        </dependency>
+
         <!-- Database -->
         <dependency>
             <groupId>org.flywaydb</groupId>
             <artifactId>flyway-core</artifactId>
-            <version>7.11.0</version>
+            <version>7.13.0</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.vault</groupId>
