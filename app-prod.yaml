@@ -38,6 +38,8 @@ spec:
       cpu: 500m
   secureLogs:
     enabled: true
+  ingresses:
+    - https://familie-ba-statistikk.nais.adeo.no
   env:
     - name: SPRING_PROFILES_ACTIVE
       value: prod
@@ -45,3 +47,15 @@ spec:
       value: /var/run/secrets/srvfamilie-ba-konsum/username
     - name: CREDENTIAL_PASSWORD
       value: /var/run/secrets/srvfamilie-ba-konsum/password
+  accessPolicy:
+    inbound:
+      rules:
+        - application: familie-ba-sak
+          namespace: teamfamilie
+          cluster: prod-fss
+  azure:
+    application:
+      enabled: true
+      tenant: nav.no
+  webproxy: true
+
