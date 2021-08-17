@@ -38,6 +38,19 @@ spec:
       cpu: 500m
   secureLogs:
     enabled: true
+  ingresses:
+    - https://familie-ba-statistikk.dev.adeo.no
   env:
     - name: SPRING_PROFILES_ACTIVE
       value: preprod
+  accessPolicy:
+    inbound:
+      rules:
+        - application: familie-ba-sak
+          namespace: teamfamilie
+          cluster: dev-fss
+  azure:
+    application:
+      enabled: true
+      tenant: trygdeetaten.no
+  webproxy: true
