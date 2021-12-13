@@ -20,7 +20,7 @@ class KafkaConfig {
             : ConcurrentKafkaListenerContainerFactory<String, VedtakDVH> {
         val factory = ConcurrentKafkaListenerContainerFactory<String, VedtakDVH>()
         factory.containerProperties.ackMode = ContainerProperties.AckMode.MANUAL_IMMEDIATE
-        factory.containerProperties.authorizationExceptionRetryInterval = Duration.ofSeconds(2)
+        factory.containerProperties.setAuthExceptionRetryInterval(Duration.ofSeconds(2))
         factory.consumerFactory = DefaultKafkaConsumerFactory(properties.buildConsumerProperties())
         factory.setMessageConverter(StringJsonMessageConverter())
         factory.setErrorHandler(kafkaErrorHandler)
