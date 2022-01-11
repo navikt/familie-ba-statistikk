@@ -69,6 +69,12 @@ spec:
               "location": "ON_PREM",
               "keyDeserializerType": "STRING",
               "valueDeserializerType": "STRING"
+            },
+            {
+              "name": "teamfamilie.aapen-barnetrygd-vedtak-v1",
+              "location": "AIVEN",
+              "keyDeserializerType": "STRING",
+              "valueDeserializerType": "STRING"
             }
           ]
         }
