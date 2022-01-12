@@ -1,4 +1,4 @@
-name: "Deploy aivia"
+name: Deploy-AiviA-Preprod
 
 on:
   workflow_dispatch:
