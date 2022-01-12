@@ -13,4 +13,5 @@ jobs:
         env:
           APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
           CLUSTER: dev-gcp
-          RESOURCE: .github/aivia-vedtak-topic-configmap.yaml,.github/aivia-vedtak-topic-dev.yaml
+          RESOURCE: .github/aivia-vedtak-topic-configmap.yaml,.github/aivia-vedtak-topic.yaml
+          VAR: pool=nav-dev

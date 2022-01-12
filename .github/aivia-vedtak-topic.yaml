@@ -36,4 +36,4 @@ spec:
   filesFrom:
     - configmap: aivia-barnetrygd-vedtak-topic-mapping
   kafka:
-    pool: nav-prod
+    pool: {{pool}}
