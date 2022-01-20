@@ -22,7 +22,7 @@
         <jvmTarget>17</jvmTarget>
         <kotlin.version>1.6.10</kotlin.version>
         <felles.version>1.20211217154554_3bb883e</felles.version>
-        <felles-kontrakter.version>2.0_20220118083803_d09946d</felles-kontrakter.version>
+        <felles-kontrakter.version>2.0_20220120144339_cc21190</felles-kontrakter.version>
         <familie.kontrakter.saksstatistikk>2.0_20211026082237_0675986</familie.kontrakter.saksstatistikk>
         <familie.kontrakter.stønadsstatistikk>2.0_20220106092651_8730ac3</familie.kontrakter.stønadsstatistikk>
         <spring-cloud.version>3.1.0</spring-cloud.version>
