@@ -49,6 +49,9 @@ spec:
         - application: familie-ba-sak
           namespace: teamfamilie
           cluster: dev-gcp
+        - application: familie-ba-sak-lokal
+          namespace: teamfamilie
+          cluster: dev-fss
   azure:
     application:
       enabled: true
