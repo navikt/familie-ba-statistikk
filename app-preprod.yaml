@@ -48,7 +48,7 @@ spec:
       rules:
         - application: familie-ba-sak
           namespace: teamfamilie
-          cluster: dev-fss
+          cluster: dev-gcp
   azure:
     application:
       enabled: true

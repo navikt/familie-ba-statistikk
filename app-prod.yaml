@@ -52,7 +52,7 @@ spec:
       rules:
         - application: familie-ba-sak
           namespace: teamfamilie
-          cluster: prod-fss
+          cluster: prod-gcp
   azure:
     application:
       enabled: true
