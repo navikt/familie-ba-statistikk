@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController
 class VedtakController(val vedtakDvhRepository: VedtakDvhRepository) {
 
     @GetMapping(path = ["/{behandlingId}"], produces = [MediaType.APPLICATION_JSON_VALUE])
-    fun sak(@PathVariable behandlingId: String) : Ressurs<Boolean> {
+    fun harSendtVedtaksmeldingForBehandling(@PathVariable behandlingId: String) : Ressurs<Boolean> {
         return Ressurs.success(vedtakDvhRepository.finnes(behandlingId))
     }
 }

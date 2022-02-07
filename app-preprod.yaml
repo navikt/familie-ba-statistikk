@@ -40,6 +40,7 @@ spec:
     enabled: true
   ingresses:
     - https://familie-ba-statistikk.dev.adeo.no
+    - https://familie-ba-statistikk.dev-fss-pub.nais.io
   env:
     - name: SPRING_PROFILES_ACTIVE
       value: preprod
