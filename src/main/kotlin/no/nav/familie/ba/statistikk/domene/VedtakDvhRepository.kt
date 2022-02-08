@@ -26,6 +26,11 @@ class VedtakDvhRepository(private val jdbcTemplate: NamedParameterJdbcTemplate) 
         return antallVedtakMed(vedtak.behandlingsId) > 0
     }
 
+    fun finnes(behandlingsId: String): Boolean {
+        return antallVedtakMed(behandlingsId) > 0
+    }
+
+
     private fun antallVedtakMed(behandlingsId: String): Int {
         val parameters = MapSqlParameterSource().addValue("behandlingsId", behandlingsId)
 
