@@ -22,6 +22,7 @@ spring:
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       enable-auto-commit: false
+      max-poll-records: 100
   datasource:
     hikari:
       maximum-pool-size: 2
