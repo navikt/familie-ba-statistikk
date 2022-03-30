@@ -1,0 +1,1 @@
+CREATE INDEX IF NOT EXISTS sak_funksjonellid_idx ON saksstatistikk_dvh(funksjonell_id);
