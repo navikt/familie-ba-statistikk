@@ -16,14 +16,14 @@ import java.time.Duration
 class KafkaConfig {
 
     @Bean
-    fun vedtakDvhListenerContainerFactory(properties: KafkaProperties, kafkaErrorHandler: KafkaErrorHandler)
+    fun vedtakDvhListenerContainerFactory(properties: KafkaProperties, restartingKafkaErrorHandler: RestartingKafkaErrorHandler)
             : ConcurrentKafkaListenerContainerFactory<String, VedtakDVH> {
         val factory = ConcurrentKafkaListenerContainerFactory<String, VedtakDVH>()
         factory.containerProperties.ackMode = ContainerProperties.AckMode.MANUAL_IMMEDIATE
         factory.containerProperties.setAuthExceptionRetryInterval(Duration.ofSeconds(2))
         factory.consumerFactory = DefaultKafkaConsumerFactory(properties.buildConsumerProperties())
         factory.setMessageConverter(StringJsonMessageConverter())
-        factory.setErrorHandler(kafkaErrorHandler)
+        factory.setErrorHandler(restartingKafkaErrorHandler)
         return factory
     }
 }
