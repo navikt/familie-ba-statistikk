@@ -40,6 +40,7 @@ spec:
     enabled: true
   ingresses:
     - https://familie-ba-statistikk.dev.adeo.no
+    - https://familie-ba-statistikk.dev.intern.nav.no
     - https://familie-ba-statistikk.dev-fss-pub.nais.io
   env:
     - name: SPRING_PROFILES_ACTIVE
@@ -56,5 +57,15 @@ spec:
   azure:
     application:
       enabled: true
+      allowAllUsers: true
+      claims:
+        extra:
+          - "NAVident"
+        groups:
+          - id: c62e908a-cf20-4ad0-b7b3-3ff6ca4bf38b # teamfamilie-forvaltning
+          - id: 928636f4-fd0d-4149-978e-a6fb68bb19de # 0000-GA-STDAPPS - tilgang til prosessering
       tenant: trygdeetaten.no
+      replyURLs:
+        - "https://familie-ba-statistikk.dev.intern.nav.no/swagger-ui/oauth2-redirect.html"
+      singlePageApplication: true
   webproxy: true

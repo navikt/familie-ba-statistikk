@@ -41,4 +41,22 @@ class SaksstatistikkDvhRepository(private val jdbcTemplate: NamedParameterJdbcTe
                                            parameters,
                                            String::class.java)!!
     }
+
+    fun antallBehandlingerMedId(behandlingId: String): Int {
+        val parameters = MapSqlParameterSource().addValue("behandlingId", behandlingId)
+
+
+        return jdbcTemplate.queryForObject("select count(*) from SAKSSTATISTIKK_DVH where type = 'BEHANDLING' AND JSON ->> 'behandlingId' = :behandlingId",
+                                           parameters,
+                                           Int::class.java)!!
+    }
+
+    fun antallFagsakMedId(fagsakId: String): Int {
+        val parameters = MapSqlParameterSource().addValue("fagsakId", fagsakId)
+
+
+        return jdbcTemplate.queryForObject("select count(*) from SAKSSTATISTIKK_DVH where type = 'SAK' AND JSON ->> 'fagsakId' = :fagsakId",
+                                           parameters,
+                                           Int::class.java)!!
+    }
 }
