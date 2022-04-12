@@ -11,7 +11,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.6.5</version>
+        <version>2.6.6</version>
     </parent>
 
     <properties>
@@ -22,7 +22,7 @@
         <jvmTarget>17</jvmTarget>
         <kotlin.version>1.6.20</kotlin.version>
         <felles.version>1.20220406145421_5f46d64</felles.version>
-        <felles-kontrakter.version>2.0_20220406133852_e1934d1</felles-kontrakter.version>
+        <felles-kontrakter.version>2.0_20220408114337_4d4313d</felles-kontrakter.version>
         <familie.kontrakter.saksstatistikk>2.0_20220125142454_8f2ffc3</familie.kontrakter.saksstatistikk>
         <familie.kontrakter.stønadsstatistikk>2.0_20220106092651_8730ac3</familie.kontrakter.stønadsstatistikk>
         <spring-cloud.version>3.1.0</spring-cloud.version>
@@ -106,7 +106,7 @@
         <dependency>
             <groupId>org.flywaydb</groupId>
             <artifactId>flyway-core</artifactId>
-            <version>8.5.6</version>
+            <version>8.5.7</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.vault</groupId>
