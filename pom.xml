@@ -20,9 +20,9 @@
         <changelist>-SNAPSHOT</changelist>
         <java.version>17</java.version>
         <jvmTarget>17</jvmTarget>
-        <kotlin.version>1.6.20</kotlin.version>
+        <kotlin.version>1.6.21</kotlin.version>
         <felles.version>1.20220406145421_5f46d64</felles.version>
-        <felles-kontrakter.version>2.0_20220408114337_4d4313d</felles-kontrakter.version>
+        <felles-kontrakter.version>2.0_20220412101553_5627657</felles-kontrakter.version>
         <familie.kontrakter.saksstatistikk>2.0_20220125142454_8f2ffc3</familie.kontrakter.saksstatistikk>
         <familie.kontrakter.stønadsstatistikk>2.0_20220106092651_8730ac3</familie.kontrakter.stønadsstatistikk>
         <spring-cloud.version>3.1.0</spring-cloud.version>
@@ -117,7 +117,7 @@
         <dependency>
             <groupId>org.flywaydb</groupId>
             <artifactId>flyway-core</artifactId>
-            <version>8.5.7</version>
+            <version>8.5.8</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.vault</groupId>
@@ -136,7 +136,7 @@
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
-            <version>42.3.3</version>
+            <version>42.3.4</version>
         </dependency>
         <dependency>
             <groupId>com.h2database</groupId>
@@ -146,7 +146,7 @@
         <dependency>
             <groupId>org.testcontainers</groupId>
             <artifactId>postgresql</artifactId>
-            <version>1.16.3</version>
+            <version>1.17.1</version>
             <scope>test</scope>
         </dependency>
 
