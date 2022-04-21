@@ -13,5 +13,9 @@ spring:
   datasource:
     url: jdbc:postgresql://b27dbvl022.preprod.local:5432/familie-ba-statistikk
 
+rolle:
+  teamfamilie:
+    forvalter: "928636f4-fd0d-4149-978e-a6fb68bb19de"
+
 
 

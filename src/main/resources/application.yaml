@@ -38,3 +38,20 @@ management:
     exposure.include: info, health, metrics, prometheus
     base-path: "/internal"
   metrics.export.prometheus.enabled: true
+
+springdoc:
+  packages-to-scan: "no.nav.familie.ba.statistikk"
+  paths-to-match: "/api/**"
+  swagger-ui:
+    oauth:
+      use-pkce-with-authorization-code-grant: true
+      client-id: ${AZURE_APP_CLIENT_ID}
+      scope-separator: ","
+    disable-swagger-default-url: true
+
+rolle:
+  teamfamilie:
+    forvalter: ""
+
+AUTHORIZATION_URL: https://login.microsoftonline.com/${AZURE_APP_TENANT_ID}/oauth2/v2.0/authorize
+API_SCOPE: api://${AZURE_APP_CLIENT_ID}/.default
