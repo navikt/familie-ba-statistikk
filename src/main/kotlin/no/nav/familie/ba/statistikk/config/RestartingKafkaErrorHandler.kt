@@ -5,22 +5,22 @@ import org.apache.kafka.clients.consumer.ConsumerRecord
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.core.task.SimpleAsyncTaskExecutor
-import org.springframework.kafka.listener.ContainerStoppingErrorHandler
+import org.springframework.kafka.listener.CommonContainerStoppingErrorHandler
 import org.springframework.kafka.listener.MessageListenerContainer
 import org.springframework.stereotype.Component
 import java.time.Duration
 import java.util.concurrent.Executor
 
 @Component
-class RestartingKafkaErrorHandler : ContainerStoppingErrorHandler() {
+class RestartingKafkaErrorHandler : CommonContainerStoppingErrorHandler() {
 
     val LOGGER: Logger = LoggerFactory.getLogger(RestartingKafkaErrorHandler::class.java)
     val SECURE_LOGGER: Logger = LoggerFactory.getLogger("secureLogger")
 
     private val executor: Executor
-    override fun handle(
-        e: Exception,
-        records: List<ConsumerRecord<*, *>>?,
+    override fun handleRemaining(
+        e: java.lang.Exception,
+        records: MutableList<ConsumerRecord<*, *>>,
         consumer: Consumer<*, *>,
         container: MessageListenerContainer
     ) {
@@ -55,7 +55,7 @@ class RestartingKafkaErrorHandler : ContainerStoppingErrorHandler() {
 
     private fun scheduleRestart(
         e: Exception,
-        records: List<ConsumerRecord<*, *>>? = null,
+        records: List<ConsumerRecord<*, *>>,
         consumer: Consumer<*, *>,
         container: MessageListenerContainer,
         topic: String
@@ -70,7 +70,7 @@ class RestartingKafkaErrorHandler : ContainerStoppingErrorHandler() {
             }
         }
         LOGGER.warn("Stopper kafka container for {} i {}", topic, Duration.ofMillis(SHORT).toString())
-        super.handle(e, records, consumer, container)
+        super.handleRemaining(e, records, consumer, container)
     }
 
     companion object {

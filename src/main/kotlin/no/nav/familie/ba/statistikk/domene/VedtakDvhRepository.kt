@@ -8,16 +8,17 @@ import org.springframework.stereotype.Repository
 @Repository
 class VedtakDvhRepository(private val jdbcTemplate: NamedParameterJdbcTemplate) {
 
-    fun lagre(offset: Long, vedtakDVH: VedtakDVH, vedtakJson: String): Int {
+    fun lagre(offset: Long, vedtakJson: String, type: VedtakDVHType, behandlingId: String, funksjonellId: String?): Int {
         val sql =
-                "insert into VEDTAK_DVH(ID, VEDTAK_JSON, ER_DUPLIKAT, OFFSET_VERDI, FUNKSJONELL_ID) " +
-                "values (nextval('VEDTAK_DVH_SEQ'), to_json(:jsontext::json), :duplikat, :offset, :funksjonellId)"
-        val antallVedtak = antallVedtakMed(vedtakDVH.behandlingsId)
+                "insert into VEDTAK_DVH(ID, VEDTAK_JSON, ER_DUPLIKAT, OFFSET_VERDI, FUNKSJONELL_ID, TYPE) " +
+                "values (nextval('VEDTAK_DVH_SEQ'), to_json(:jsontext::json), :duplikat, :offset, :funksjonellId, :type)"
+        val antallVedtak = antallVedtakMed(behandlingId)
         val parameters = MapSqlParameterSource()
                 .addValue("jsontext", vedtakJson)
                 .addValue("offset", offset)
                 .addValue("duplikat", antallVedtak > 0)
-                .addValue("funksjonellId", vedtakDVH.funksjonellId)
+                .addValue("funksjonellId", funksjonellId)
+                .addValue("type", type.name)
 
         return jdbcTemplate.update(sql, parameters) + antallVedtak
     }
@@ -39,4 +40,9 @@ class VedtakDvhRepository(private val jdbcTemplate: NamedParameterJdbcTemplate) 
                                            parameters,
                                            Int::class.java)!!
     }
+}
+
+enum class VedtakDVHType {
+    VEDTAK_V1,
+    VEDTAK_V2
 }
