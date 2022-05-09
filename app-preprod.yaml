@@ -54,3 +54,5 @@ spec:
       enabled: true
       tenant: trygdeetaten.no
   webproxy: true
+  kafka:
+    pool: nav-dev

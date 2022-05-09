@@ -71,7 +71,13 @@ spec:
               "valueDeserializerType": "STRING"
             },
             {
-              "name": "teamfamilie.aapen-barnetrygd-vedtak-v1",
+              "name": "teamfamilie.aapen-barnetrygd-vedtak-v2",
+              "location": "AIVEN",
+              "keyDeserializerType": "STRING",
+              "valueDeserializerType": "STRING"
+            },
+            {
+              "name": "teamfamilie.aapen-familie-ba-sak-opphoer-barnetrygd",
               "location": "AIVEN",
               "keyDeserializerType": "STRING",
               "valueDeserializerType": "STRING"

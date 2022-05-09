@@ -58,4 +58,6 @@ spec:
       enabled: true
       tenant: nav.no
   webproxy: true
+  kafka:
+    pool: nav-prod
 
