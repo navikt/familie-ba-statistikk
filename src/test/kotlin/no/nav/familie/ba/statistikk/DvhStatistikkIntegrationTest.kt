@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException
 import io.mockk.every
 import io.mockk.mockk
 import no.nav.familie.ba.statistikk.database.DbContainerInitializer
+import no.nav.familie.ba.statistikk.domene.VedtakDVHType
 import no.nav.familie.ba.statistikk.domene.VedtakDvhRepository
 import no.nav.familie.kontrakter.felles.objectMapper
 import org.apache.kafka.clients.consumer.ConsumerRecord
@@ -100,7 +101,7 @@ class DvhStatistikkIntegrationTest {
     @Test
     fun `consume() skal kaste error hvis lagre() returnerer 0`() {
         val repository: VedtakDvhRepository = mockk()
-        every { repository.lagre(1, any(), any()) } returns 0
+        every { repository.lagre(1, any(), VedtakDVHType.VEDTAK_V1, any(), any()) } returns 0
 
         Assertions.assertThrows(IllegalStateException::class.java) {
             VedtakKafkaConsumer(repository)
@@ -113,7 +114,7 @@ class DvhStatistikkIntegrationTest {
     @Test
     fun `consume() skal kaste error hvis json ikke er i henhold til kontrakt`() {
         val repository: VedtakDvhRepository = mockk()
-        every { repository.lagre(1, any(), any()) } returns 1
+        every { repository.lagre(1, any(), VedtakDVHType.VEDTAK_V1, any(), null) } returns 1
 
         Assertions.assertThrows(JsonProcessingException::class.java) {
             VedtakKafkaConsumer(repository)
@@ -127,11 +128,15 @@ class DvhStatistikkIntegrationTest {
     fun `lagre() returverdi skal telle duplikater`() {
         val vedtak = TestData.vedtakDvh()
         val vedtakJson = objectMapper.writeValueAsString(vedtak)
-        Assertions.assertEquals(1, vedtakDvhRepository.lagre(1, vedtak, vedtakJson))
-        Assertions.assertEquals(2, vedtakDvhRepository.lagre(1, vedtak, vedtakJson))
-        Assertions.assertEquals(3, vedtakDvhRepository.lagre(1, vedtak, vedtakJson))
-        Assertions.assertEquals(1, vedtakDvhRepository.lagre(1, vedtak.copy(behandlingsId = "2"),
-                                                             vedtakJson))
+        Assertions.assertEquals(1, vedtakDvhRepository.lagre(1, vedtakJson, VedtakDVHType.VEDTAK_V1, vedtak.behandlingsId, vedtak.funksjonellId))
+        Assertions.assertEquals(2, vedtakDvhRepository.lagre(1, vedtakJson, VedtakDVHType.VEDTAK_V1, vedtak.behandlingsId, vedtak.funksjonellId))
+        Assertions.assertEquals(3, vedtakDvhRepository.lagre(1, vedtakJson, VedtakDVHType.VEDTAK_V1, vedtak.behandlingsId, vedtak.funksjonellId))
+        Assertions.assertEquals(1, vedtakDvhRepository.lagre(
+            1, vedtakJson,
+            VedtakDVHType.VEDTAK_V1,
+            "2",
+            vedtak.funksjonellId
+        ))
     }
 
     @Test
@@ -139,7 +144,7 @@ class DvhStatistikkIntegrationTest {
         val vedtak = TestData.vedtakDvh()
         val vedtakJson = "FOO"
         Assertions.assertThrows(DataIntegrityViolationException::class.java) {
-            vedtakDvhRepository.lagre(1, vedtak, vedtakJson)
+            vedtakDvhRepository.lagre(1, vedtakJson, VedtakDVHType.VEDTAK_V1, vedtak.behandlingsId, vedtak.funksjonellId)
         }
     }
 

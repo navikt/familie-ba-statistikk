@@ -23,7 +23,7 @@ class KafkaConfig {
         factory.containerProperties.setAuthExceptionRetryInterval(Duration.ofSeconds(2))
         factory.consumerFactory = DefaultKafkaConsumerFactory(properties.buildConsumerProperties())
         factory.setMessageConverter(StringJsonMessageConverter())
-        factory.setErrorHandler(restartingKafkaErrorHandler)
+        factory.setCommonErrorHandler(restartingKafkaErrorHandler)
         return factory
     }
 }
