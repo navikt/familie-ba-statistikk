@@ -69,3 +69,5 @@ spec:
         - "https://familie-ba-statistikk.dev.intern.nav.no/swagger-ui/oauth2-redirect.html"
       singlePageApplication: true
   webproxy: true
+  kafka:
+    pool: nav-dev
