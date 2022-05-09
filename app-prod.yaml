@@ -27,7 +27,7 @@ spec:
         mountPath: /var/run/secrets/srvfamilie-ba-konsum
   replicas:
     min: 1
-    max: 1
+    max: 2
     cpuThresholdPercentage: 50
   resources:
     limits:
@@ -40,6 +40,8 @@ spec:
     enabled: true
   ingresses:
     - https://familie-ba-statistikk.nais.adeo.no
+    - https://familie-ba-statistikk.intern.nav.no
+    - https://familie-ba-statistikk.prod-fss-pub.nais.io
   env:
     - name: SPRING_PROFILES_ACTIVE
       value: prod
@@ -52,11 +54,21 @@ spec:
       rules:
         - application: familie-ba-sak
           namespace: teamfamilie
-          cluster: prod-fss
+          cluster: prod-gcp
   azure:
     application:
       enabled: true
+      allowAllUsers: true
       tenant: nav.no
+      claims:
+        extra:
+          - "NAVident"
+        groups:
+          - id: 3d718ae5-f25e-47a4-b4b3-084a97604c1d # teamfamilie-forvaltning
+          - id: 87190cf3-b278-457d-8ab7-1a5c55a9edd7 # Group_87190cf3-b278-457d-8ab7-1a5c55a9edd7 tilgang til prosessering
+      replyURLs:
+        - "https://familie-ba-statistikk.intern.nav.no/swagger-ui/oauth2-redirect.html"
+      singlePageApplication: true
   webproxy: true
   kafka:
     pool: nav-prod

@@ -21,3 +21,7 @@ spring:
       security.protocol: SASL_PLAINTEXT
       sasl:
         jaas.config: org.apache.kafka.common.security.plain.PlainLoginModule required username="igroup" password="itest";
+
+AZURE_OPENID_CONFIG_TOKEN_ENDPOINT: http://localhost:1111/v2.0/token
+AUTHORIZATION_URL: http://localhost:1111/v2.0/authorize
+AZURE_APP_CLIENT_ID: env-var

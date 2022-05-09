@@ -41,4 +41,58 @@ class SaksstatistikkDvhRepository(private val jdbcTemplate: NamedParameterJdbcTe
                                            parameters,
                                            String::class.java)!!
     }
+
+    fun antallBehandlingerMedId(behandlingId: String): Int {
+        val parameters = MapSqlParameterSource().addValue("behandlingId", behandlingId)
+
+
+        return jdbcTemplate.queryForObject("select count(*) from SAKSSTATISTIKK_DVH where type = 'BEHANDLING' AND JSON ->> 'behandlingId' = :behandlingId",
+                                           parameters,
+                                           Int::class.java)!!
+    }
+
+    fun hentJSONForBehandlingerMedBehandlingId(behandlingId: String): List<String> {
+        val parameters = MapSqlParameterSource().addValue("behandlingId", behandlingId)
+
+
+        return jdbcTemplate.queryForList("select json from SAKSSTATISTIKK_DVH where type = 'BEHANDLING' AND JSON ->> 'behandlingId' = :behandlingId",
+                                           parameters,
+                                           String::class.java)!!
+    }
+
+    fun hentJSONBehandlingerMedFunksjonellId(funksjonellId: String): List<String> {
+        val parameters = MapSqlParameterSource().addValue("funksjonellId", funksjonellId)
+
+
+        return jdbcTemplate.queryForList("select json from SAKSSTATISTIKK_DVH where type = 'BEHANDLING' AND funksjonell_id = :funksjonellId",
+                                           parameters,
+                                           String::class.java)!!
+    }
+
+    fun antallFagsakMedId(fagsakId: String): Int {
+        val parameters = MapSqlParameterSource().addValue("fagsakId", fagsakId)
+
+
+        return jdbcTemplate.queryForObject("select count(*) from SAKSSTATISTIKK_DVH where type = 'SAK' AND JSON ->> 'sakId' = :fagsakId",
+                                           parameters,
+                                           Int::class.java)!!
+    }
+
+    fun hentJSONForFagsakForFagsakId(fagsakId: String): List<String>  {
+        val parameters = MapSqlParameterSource().addValue("fagsakId", fagsakId)
+
+
+        return jdbcTemplate.queryForList("select json from SAKSSTATISTIKK_DVH where type = 'SAK' AND JSON ->> 'sakId' = :fagsakId",
+                                           parameters,
+                                           String::class.java)!!
+    }
+
+    fun hentJSONForFagsakForFunksjonellId(funksjonellId: String): List<String>  {
+        val parameters = MapSqlParameterSource().addValue("funksjonellId", funksjonellId)
+
+
+        return jdbcTemplate.queryForList("select json from SAKSSTATISTIKK_DVH where type = 'SAK' AND funksjonell_id = :funksjonellId",
+                                           parameters,
+                                           String::class.java)!!
+    }
 }
