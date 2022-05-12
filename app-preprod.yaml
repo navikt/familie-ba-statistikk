@@ -54,6 +54,11 @@ spec:
         - application: familie-ba-sak-lokal
           namespace: teamfamilie
           cluster: dev-fss
+    outbound:
+      rules:
+        - application: familie-ba-sak
+          namespace: teamfamilie
+          cluster: dev-gcp
   azure:
     application:
       enabled: true

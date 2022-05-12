@@ -1,6 +1,8 @@
 package no.nav.familie.ba.statistikk.config
 
+import no.nav.familie.http.config.RestTemplateAzure
 import no.nav.familie.log.filter.LogFilter
+import no.nav.security.token.support.client.spring.oauth2.EnableOAuth2Client
 import no.nav.security.token.support.spring.api.EnableJwtTokenValidation
 import org.slf4j.LoggerFactory
 import org.springframework.boot.SpringBootConfiguration
@@ -8,6 +10,7 @@ import org.springframework.boot.context.properties.ConfigurationPropertiesScan
 import org.springframework.boot.web.servlet.FilterRegistrationBean
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.ComponentScan
+import org.springframework.context.annotation.Import
 import org.springframework.scheduling.annotation.EnableScheduling
 
 @SpringBootConfiguration
@@ -15,6 +18,8 @@ import org.springframework.scheduling.annotation.EnableScheduling
 @ComponentScan(ApplicationConfig.pakkenavn)
 @EnableScheduling
 @EnableJwtTokenValidation(ignore = ["org.springframework","org.springdoc"])
+@EnableOAuth2Client
+@Import(RestTemplateAzure::class)
 class ApplicationConfig {
 
     @Bean
