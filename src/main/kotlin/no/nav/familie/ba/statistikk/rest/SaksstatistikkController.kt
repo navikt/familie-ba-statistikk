@@ -117,7 +117,7 @@ class SaksstatistikkController(val saksstatistikkDvhRepository: SaksstatistikkDv
 
         try {
             if (!fieldNames.contains("funksjonellId")) error("Mangler funksjonellId på patchmelding")
-            if (!fieldNames.contains("sakId")) error("Mangler behandlingId på patchmelding")
+            if (!fieldNames.contains("sakId")) error("Mangler sakId på patchmelding")
             if (!fieldNames.contains("versjon")) error("Mangler kontraktversjon på patchmelding")
 
         } catch (e: Exception) {
