@@ -17,7 +17,7 @@ class SaksstatistikkBehandlingConsumer(private val saksstatistikkDvhRepository: 
     private val logger = LoggerFactory.getLogger(this::class.java)
     private val secureLogger = LoggerFactory.getLogger("secureLogger")
 
-    @KafkaListener(topics = ["aapen-barnetrygd-saksstatistikk-behandling-v1"],
+    @KafkaListener(topics = [TOPIC_NAVN],
                    id = "familie-ba-saksstatistikk-behandling",
                    idIsGroup = false,
                    containerFactory = "vedtakDvhListenerContainerFactory")
@@ -36,7 +36,7 @@ class SaksstatistikkBehandlingConsumer(private val saksstatistikkDvhRepository: 
                 when {
                     this == 1 -> secureLogger.info("Saksstatistikk-behandling mottatt og lagret: $json")
                     this > 1 -> logger.error("Saksstatistikk-behandling mottatt på nytt. Lagret, merket som duplikat. offset=${cr.offset()} key=${cr.key()}")
-                    else -> throw error("Lagring av nytt Saksstatistikk-behandling mislyktes! offset=${cr.offset()} key=${cr.key()}")
+                    else -> error("Lagring av nytt Saksstatistikk-behandling mislyktes! offset=${cr.offset()} key=${cr.key()}")
                 }
             }
             //valider at meldingen lar seg deserialisere
@@ -58,5 +58,6 @@ class SaksstatistikkBehandlingConsumer(private val saksstatistikkDvhRepository: 
 
     companion object {
         private const val BEHANDLING = "BEHANDLING"
+        const val TOPIC_NAVN = "aapen-barnetrygd-saksstatistikk-behandling-v1"
     }
 }
