@@ -55,6 +55,11 @@ spec:
         - application: familie-ba-sak
           namespace: teamfamilie
           cluster: prod-gcp
+    outbound:
+      rules:
+        - application: familie-ba-sak
+          namespace: teamfamilie
+          cluster: prod-gcp
   azure:
     application:
       enabled: true

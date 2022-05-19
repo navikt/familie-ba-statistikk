@@ -34,7 +34,7 @@ class SaksstatistikkSakConsumer(private val saksstatistikkDvhRepository: Sakssta
                 when {
                     this == 1 -> secureLogger.info("Saksstatistikk-sak mottatt og lagret: $json")
                     this > 1 -> logger.error("Saksstatistikk-sak mottatt på nytt. Lagret, merket som duplikat. offset=${cr.offset()} key=${cr.key()}")
-                    else -> throw error("Lagring av nytt Saksstatistikk-sak mislyktes! offset=${cr.offset()} key=${cr.key()}")
+                    else -> error("Lagring av nytt Saksstatistikk-sak mislyktes! offset=${cr.offset()} key=${cr.key()}")
                 }
             }
 
@@ -47,6 +47,7 @@ class SaksstatistikkSakConsumer(private val saksstatistikkDvhRepository: Sakssta
 
     companion object {
         private const val SAK = "SAK"
+        const val TOPIC_NAVN = "aapen-barnetrygd-saksstatistikk-sak-v1"
     }
 
 }
