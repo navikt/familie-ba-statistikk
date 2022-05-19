@@ -55,6 +55,11 @@ spec:
         - application: familie-ba-sak
           namespace: teamfamilie
           cluster: prod-gcp
+    outbound:
+      rules:
+        - application: familie-ba-sak
+          namespace: teamfamilie
+          cluster: prod-gcp
   azure:
     application:
       enabled: true
@@ -70,4 +75,6 @@ spec:
         - "https://familie-ba-statistikk.intern.nav.no/swagger-ui/oauth2-redirect.html"
       singlePageApplication: true
   webproxy: true
+  kafka:
+    pool: nav-prod
 

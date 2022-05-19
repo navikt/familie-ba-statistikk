@@ -117,7 +117,7 @@
         <dependency>
             <groupId>org.flywaydb</groupId>
             <artifactId>flyway-core</artifactId>
-            <version>8.5.10</version>
+            <version>8.5.11</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.vault</groupId>
@@ -157,6 +157,11 @@
             <version>${felles.version}</version>
         </dependency>
         <dependency>
+            <groupId>no.nav.familie.felles</groupId>
+            <artifactId>http-client</artifactId>
+            <version>${felles.version}</version>
+        </dependency>
+        <dependency>
             <groupId>no.nav.familie.kontrakter</groupId>
             <artifactId>felles</artifactId>
             <version>${felles-kontrakter.version}</version>
@@ -185,7 +190,7 @@
         <dependency>
             <groupId>io.mockk</groupId>
             <artifactId>mockk</artifactId>
-            <version>1.12.3</version>
+            <version>1.12.4</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
