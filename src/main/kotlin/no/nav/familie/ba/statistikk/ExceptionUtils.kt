@@ -25,7 +25,7 @@ fun handleException(up: Exception,
             secureLogger.error("[$type] Fikk melding som ikke er i henhold til gjeldende kontrakt. offset=${cr.offset()} key=${cr.key()} melding=${cr.value()}",
                                up)
             //Må ta ibruk ny kontrakt for å kunne lese disse meldingene
-            //throw up midlertidig hopp over disse i test
+            throw up
         }
         else -> throw up
     }
