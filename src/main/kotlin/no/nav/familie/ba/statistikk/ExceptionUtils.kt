@@ -1,6 +1,7 @@
 package no.nav.familie.ba.statistikk
 
 import com.fasterxml.jackson.core.JsonProcessingException
+import com.fasterxml.jackson.databind.exc.MismatchedInputException
 import org.apache.kafka.clients.consumer.ConsumerRecord
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
