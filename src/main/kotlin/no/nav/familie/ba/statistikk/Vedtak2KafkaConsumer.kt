@@ -32,9 +32,9 @@ class Vedtak2KafkaConsumer(private val vedtakDvhRepository: VedtakDvhRepository)
 
             vedtakDvhRepository.lagre(cr.offset(), vedtak, VedtakDVHType.VEDTAK_V2, vedtakDVH.behandlingsId, vedtakDVH.funksjonellId).apply {
                 when {
-                    this == 1 -> secureLogger.info("Vedtak mottatt og lagret: $vedtak")
-                    this > 1 -> logger.error("Vedtak mottatt på nytt. Lagret, merket som duplikat. offset=${cr.offset()} key=${cr.key()}")
-                    else -> throw error("Lagring av nytt vedtak mislyktes! offset=${cr.offset()} key=${cr.key()}")
+                    this == 1 -> secureLogger.info("VedtakV2 mottatt og lagret: $vedtak")
+                    this > 1 -> logger.error("VedtakV2 mottatt på nytt. Lagret, merket som duplikat. offset=${cr.offset()} key=${cr.key()}")
+                    else -> throw error("Lagring av nytt vedtakV2 mislyktes! offset=${cr.offset()} key=${cr.key()}")
                 }
             }
 
@@ -42,7 +42,7 @@ class Vedtak2KafkaConsumer(private val vedtakDvhRepository: VedtakDvhRepository)
 
 
         } catch (up: Exception) {
-            handleException(up, cr, logger, "VEDTAK")
+            handleException(up, cr, logger, "VEDTAKV2")
         }
         ack.acknowledge()
     }
