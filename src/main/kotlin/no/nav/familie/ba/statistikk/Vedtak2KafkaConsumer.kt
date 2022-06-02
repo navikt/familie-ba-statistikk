@@ -18,7 +18,7 @@ class Vedtak2KafkaConsumer(private val vedtakDvhRepository: VedtakDvhRepository)
     private val secureLogger = LoggerFactory.getLogger("secureLogger")
 
     @KafkaListener(topics = ["teamfamilie.aapen-barnetrygd-vedtak-v2"],
-                   groupId = "statistikk-v2",
+                   groupId = "statistikk-v2-test",
                    id = "familie-ba-statistikk-v2",
                    idIsGroup = false,
                    containerFactory = "kafkaAivenHendelseListenerContainerFactory")
