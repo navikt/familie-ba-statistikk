@@ -25,9 +25,9 @@
         <felles-kontrakter.version>2.0_20220504092027_190334e</felles-kontrakter.version>
         <familie.kontrakter.saksstatistikk>2.0_20220125142454_8f2ffc3</familie.kontrakter.saksstatistikk>
         <familie.kontrakter.stønadsstatistikk>2.0_20220506145321_fda933e</familie.kontrakter.stønadsstatistikk>
-        <spring-cloud.version>3.1.0</spring-cloud.version>
+        <spring-cloud.version>3.1.1</spring-cloud.version>
         <token-validation-spring.version>2.0.5</token-validation-spring.version>
-        <springdoc.version>1.6.8</springdoc.version>
+        <springdoc.version>1.6.9</springdoc.version>
     </properties>
 
     <dependencies>
@@ -117,7 +117,7 @@
         <dependency>
             <groupId>org.flywaydb</groupId>
             <artifactId>flyway-core</artifactId>
-            <version>8.5.11</version>
+            <version>8.5.12</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.vault</groupId>
@@ -136,7 +136,7 @@
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
-            <version>42.3.5</version>
+            <version>42.3.6</version>
         </dependency>
         <dependency>
             <groupId>com.h2database</groupId>
