@@ -4,6 +4,7 @@ import org.apache.kafka.clients.CommonClientConfigs
 import org.apache.kafka.clients.consumer.ConsumerConfig
 import org.apache.kafka.common.config.SslConfigs
 import org.apache.kafka.common.serialization.StringDeserializer
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.core.env.Environment
@@ -29,8 +30,9 @@ class KafkaAivenConfig(val environment: Environment) {
         return factory
     }
 
+    @ConditionalOnMissingBean(KafkaListenerEndpointRegistry::class)
     @Bean(name = [KafkaListenerConfigUtils.KAFKA_LISTENER_ENDPOINT_REGISTRY_BEAN_NAME])
-    fun kafkaListenerEndpointRegistry(): KafkaListenerEndpointRegistry? {
+    fun kafkaListenerEndpointRegistry(): KafkaListenerEndpointRegistry {
         return KafkaListenerEndpointRegistry()
     }
 
