@@ -11,7 +11,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.6.7</version>
+        <version>2.7.1</version>
     </parent>
 
     <properties>
@@ -24,7 +24,7 @@
         <felles.version>1.20220610091149_ae616c5</felles.version>
         <felles-kontrakter.version>2.0_20220513154245_fec66c5</felles-kontrakter.version>
         <familie.kontrakter.saksstatistikk>2.0_20220125142454_8f2ffc3</familie.kontrakter.saksstatistikk>
-        <familie.kontrakter.stønadsstatistikk>2.0_20220609214258_f30c3ce</familie.kontrakter.stønadsstatistikk>
+        <familie.kontrakter.stønadsstatistikk>2.0_20220614135934_8423c48</familie.kontrakter.stønadsstatistikk>
         <spring-cloud.version>3.1.1</spring-cloud.version>
         <token-validation-spring.version>2.0.5</token-validation-spring.version>
         <springdoc.version>1.6.9</springdoc.version>
