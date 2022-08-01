@@ -11,7 +11,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.7.1</version>
+        <version>2.7.2</version>
     </parent>
 
     <properties>
@@ -20,9 +20,9 @@
         <changelist>-SNAPSHOT</changelist>
         <java.version>17</java.version>
         <jvmTarget>17</jvmTarget>
-        <kotlin.version>1.7.0</kotlin.version>
+        <kotlin.version>1.7.10</kotlin.version>
         <felles.version>1.20220610091149_ae616c5</felles.version>
-        <felles-kontrakter.version>2.0_20220628113239_2eb76f0</felles-kontrakter.version>
+        <felles-kontrakter.version>2.0_20220712141639_0440c10</felles-kontrakter.version>
         <familie.kontrakter.saksstatistikk>2.0_20220125142454_8f2ffc3</familie.kontrakter.saksstatistikk>
         <familie.kontrakter.stønadsstatistikk>2.0_20220614135934_8423c48</familie.kontrakter.stønadsstatistikk>
         <spring-cloud.version>3.1.1</spring-cloud.version>
@@ -190,7 +190,7 @@
         <dependency>
             <groupId>io.mockk</groupId>
             <artifactId>mockk</artifactId>
-            <version>1.12.4</version>
+            <version>1.12.5</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
