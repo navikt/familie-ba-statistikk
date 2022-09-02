@@ -1,6 +1,5 @@
 package no.nav.familie.ba.statistikk.domene
 
-import no.nav.familie.eksterne.kontrakter.VedtakDVH
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate
 import org.springframework.stereotype.Repository
@@ -21,10 +20,6 @@ class VedtakDvhRepository(private val jdbcTemplate: NamedParameterJdbcTemplate) 
                 .addValue("type", type.name)
 
         return jdbcTemplate.update(sql, parameters) + antallVedtak
-    }
-
-    fun finnes(vedtak: VedtakDVH): Boolean {
-        return antallVedtakMed(vedtak.behandlingsId) > 0
     }
 
     fun finnes(behandlingsId: String): Boolean {
