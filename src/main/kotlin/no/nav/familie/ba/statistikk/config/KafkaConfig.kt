@@ -1,6 +1,6 @@
 package no.nav.familie.ba.statistikk.config
 
-import no.nav.familie.eksterne.kontrakter.VedtakDVH
+
 import org.springframework.boot.autoconfigure.kafka.KafkaProperties
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -19,8 +19,8 @@ class KafkaConfig {
 
     @Bean
     fun vedtakDvhListenerContainerFactory(properties: KafkaProperties, restartingKafkaErrorHandler: RestartingKafkaErrorHandler)
-            : ConcurrentKafkaListenerContainerFactory<String, VedtakDVH> {
-        val factory = ConcurrentKafkaListenerContainerFactory<String, VedtakDVH>()
+            : ConcurrentKafkaListenerContainerFactory<String, String> {
+        val factory = ConcurrentKafkaListenerContainerFactory<String, String>()
         factory.containerProperties.ackMode = ContainerProperties.AckMode.MANUAL_IMMEDIATE
         factory.containerProperties.setAuthExceptionRetryInterval(Duration.ofSeconds(2))
         factory.consumerFactory = DefaultKafkaConsumerFactory(properties.buildConsumerProperties())
