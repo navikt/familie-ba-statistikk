@@ -22,13 +22,14 @@ class Vedtak2KafkaConsumer(private val vedtakDvhRepository: VedtakDvhRepository)
                    id = "familie-ba-statistikk-v2",
                    idIsGroup = false,
                    containerFactory = "kafkaAivenHendelseListenerContainerFactory",
-                   autoStartup = "\${kafka.enabled:true}"
+                   autoStartup = "\${kafka.enabled:false}"
     )
     @Transactional
     fun consume(cr: ConsumerRecord<String, String>, ack: Acknowledgment) {
         try {
             val offset = cr.offset()
             if (vedtakDvhRepository.harLestMeldiong(offset)) {
+                logger.info("Har alt lest melding med offset $offset")
                 ack.acknowledge()
                 return
             }
