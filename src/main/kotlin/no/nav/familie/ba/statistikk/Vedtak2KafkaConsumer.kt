@@ -21,10 +21,18 @@ class Vedtak2KafkaConsumer(private val vedtakDvhRepository: VedtakDvhRepository)
                    groupId = "statistikk-v2",
                    id = "familie-ba-statistikk-v2",
                    idIsGroup = false,
-                   containerFactory = "kafkaAivenHendelseListenerContainerFactory")
+                   containerFactory = "kafkaAivenHendelseListenerContainerFactory",
+                   autoStartup = "\${kafka.enabled:true}"
+    )
     @Transactional
     fun consume(cr: ConsumerRecord<String, String>, ack: Acknowledgment) {
         try {
+            val offset = cr.offset()
+            if (vedtakDvhRepository.harLestMeldiong(offset)) {
+                ack.acknowledge()
+                return
+            }
+
             val vedtak = cr.value()
 
             //valider at meldingen lar seg deserialisere
@@ -37,10 +45,6 @@ class Vedtak2KafkaConsumer(private val vedtakDvhRepository: VedtakDvhRepository)
                     else -> throw error("Lagring av nytt vedtakV2 mislyktes! offset=${cr.offset()} key=${cr.key()}")
                 }
             }
-
-
-
-
         } catch (up: Exception) {
             handleException(up, cr, logger, "VEDTAKV2")
         }
