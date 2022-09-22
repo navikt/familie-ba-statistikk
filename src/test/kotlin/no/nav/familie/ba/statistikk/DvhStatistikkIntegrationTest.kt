@@ -52,6 +52,7 @@ class DvhStatistikkIntegrationTest {
         val vedtak = TestData.vedtakDvhV2()
 
         vedtak2KafkaConsumer.consume(lagConsumerRecord(vedtak), ack)
+        vedtak2KafkaConsumer.consume(lagConsumerRecord(vedtak), ack)
 
         Assertions.assertTrue(vedtakDvhRepository.finnes(vedtak.behandlingsId))
     }
@@ -102,6 +103,7 @@ class DvhStatistikkIntegrationTest {
     fun `consume() skal kaste error hvis lagre() returnerer 0`() {
         val repository: VedtakDvhRepository = mockk()
         every { repository.lagre(1, any(), VedtakDVHType.VEDTAK_V2, any(), any()) } returns 0
+        every { repository.harLestMeldiong(1) } returns false
 
         Assertions.assertThrows(IllegalStateException::class.java) {
             Vedtak2KafkaConsumer(repository)
@@ -115,6 +117,7 @@ class DvhStatistikkIntegrationTest {
     fun `consume() skal kaste error hvis json ikke er i henhold til kontrakt`() {
         val repository: VedtakDvhRepository = mockk()
         every { repository.lagre(1, any(), VedtakDVHType.VEDTAK_V2, any(), null) } returns 1
+        every { repository.harLestMeldiong(1) } returns false
 
         Assertions.assertThrows(JsonProcessingException::class.java) {
             Vedtak2KafkaConsumer(repository)
