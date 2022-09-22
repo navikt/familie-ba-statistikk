@@ -22,7 +22,7 @@ class Vedtak2KafkaConsumer(private val vedtakDvhRepository: VedtakDvhRepository)
                    id = "familie-ba-statistikk-v2",
                    idIsGroup = false,
                    containerFactory = "kafkaAivenHendelseListenerContainerFactory",
-                   autoStartup = "\${kafka.enabled:true}"
+                   autoStartup = "\${kafka.enabled:false}"
     )
     @Transactional
     fun consume(cr: ConsumerRecord<String, String>, ack: Acknowledgment) {
