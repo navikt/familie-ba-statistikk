@@ -26,6 +26,15 @@ class VedtakDvhRepository(private val jdbcTemplate: NamedParameterJdbcTemplate) 
         return antallVedtakMed(behandlingsId) > 0
     }
 
+    fun harLestMeldiong(offset: Long): Boolean {
+        val parameters = MapSqlParameterSource().addValue("offset", offset)
+
+
+        return jdbcTemplate.queryForObject("select count(*) from VEDTAK_DVH where type = 'VEDTAK_V2' and offset_verdi = :offset",
+                                           parameters,
+                                           Int::class.java)!! > 0
+    }
+
 
     private fun antallVedtakMed(behandlingsId: String): Int {
         val parameters = MapSqlParameterSource().addValue("behandlingsId", behandlingsId)
@@ -35,6 +44,8 @@ class VedtakDvhRepository(private val jdbcTemplate: NamedParameterJdbcTemplate) 
                                            parameters,
                                            Int::class.java)!!
     }
+
+
 }
 
 enum class VedtakDVHType {
