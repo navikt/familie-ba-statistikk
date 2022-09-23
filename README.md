@@ -13,6 +13,18 @@ vedtak_dvh - meldinger for stønadsstatistikk
 SELECT s.id AS missing_ids
 FROM generate_series(0, 1427044) s(id)
 WHERE NOT EXISTS (SELECT 1 FROM saksstatistikk_dvh WHERE type ='BEHANDLING' AND offset_verdi = s.id);
+
+SELECT s.id AS missing_ids
+FROM generate_series(0, 31010) s(id)
+WHERE NOT EXISTS (SELECT 1 FROM vedtak_dvh WHERE type ='VEDTAK_V2' AND offset_verdi = s.id);
+```
+
+### Finne meldinger med kompetanseperioder med sokersaktivitet satt en verdi
+```
+SELECT v.vedtak_json -> 'kompetanseperioder'
+FROM vedtak_dvh v
+         CROSS JOIN jsonb_array_elements(v.vedtak_json -> 'kompetanseperioder')
+where v.type = 'VEDTAK_V2' AND value->>'sokersaktivitet' IN ('MOTTAR_PENSJON_FRA_NORGE');
 ```
 
 ## historisk info
