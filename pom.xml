@@ -21,7 +21,7 @@
         <java.version>17</java.version>
         <jvmTarget>17</jvmTarget>
         <kotlin.version>1.7.10</kotlin.version>
-        <felles.version>1.20220901103347_4819e55</felles.version>
+        <felles.version>1.20220930133126_14f75ec</felles.version>
         <felles-kontrakter.version>2.0_20220916130234_aa8ba65</felles-kontrakter.version>
         <familie.kontrakter.saksstatistikk>2.0_20220125142454_8f2ffc3</familie.kontrakter.saksstatistikk>
         <familie.kontrakter.stønadsstatistikk>2.0_20220923123433_db565d1</familie.kontrakter.stønadsstatistikk>
