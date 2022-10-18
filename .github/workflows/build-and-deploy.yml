@@ -33,6 +33,7 @@ jobs:
         if: ${{ always() }}
         uses: scacap/action-surefire-report@v1.0.13
       - name: Bygg Docker image og push til Github Package
+        if: github.triggering_actor != 'dependabot[bot]'
         env:
           GITHUB_USERNAME: x-access-token
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -41,6 +42,7 @@ jobs:
           echo "$GITHUB_TOKEN" | docker login --username "$GITHUB_USERNAME" --password-stdin docker.pkg.github.com
           docker push ${IMAGE}
       - name: Deploy til dev-fss
+        if: github.triggering_actor != 'dependabot[bot]'
         uses: nais/deploy/actions/deploy@v1
         env:
           APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
