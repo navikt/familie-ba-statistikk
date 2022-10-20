@@ -65,12 +65,6 @@ spec:
               "valueDeserializerType": "STRING"
             },
             {
-              "name": "aapen-barnetrygd-vedtak-v1",
-              "location": "ON_PREM",
-              "keyDeserializerType": "STRING",
-              "valueDeserializerType": "STRING"
-            },
-            {
               "name": "teamfamilie.aapen-barnetrygd-vedtak-v2",
               "location": "AIVEN",
               "keyDeserializerType": "STRING",
@@ -81,6 +75,19 @@ spec:
               "location": "AIVEN",
               "keyDeserializerType": "STRING",
               "valueDeserializerType": "STRING"
+            },
+            {
+              "name": "teamfamilie.aapen-barnetrygd-saksstatistikk-sak-v1",
+              "location": "AIVEN",
+              "keyDeserializerType": "STRING",
+              "valueDeserializerType": "STRING"
+            },
+            {
+              "name": "teamfamilie.aapen-barnetrygd-saksstatistikk-behandling-v1",
+              "location": "AIVEN",
+              "keyDeserializerType": "STRING",
+              "valueDeserializerType": "STRING"
             }
+        
           ]
         }
