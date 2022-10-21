@@ -95,4 +95,21 @@ class SaksstatistikkDvhRepository(private val jdbcTemplate: NamedParameterJdbcTe
                                            parameters,
                                            String::class.java)!!
     }
+
+    fun harLestSakMelding(offset: Long): Boolean {
+        val parameters = MapSqlParameterSource().addValue("offset", offset)
+
+        return jdbcTemplate.queryForObject("select count(*) from SAKSSTATISTIKK_DVH where type = 'SAK' and offset_verdi = :offset",
+                                           parameters,
+                                           Int::class.java)!! > 0
+    }
+
+    fun harLestBehandlingMelding(offset: Long): Boolean {
+        val parameters = MapSqlParameterSource().addValue("offset", offset)
+
+        return jdbcTemplate.queryForObject("select count(*) from SAKSSTATISTIKK_DVH where type = 'BEHANDLING' and offset_verdi = :offset",
+                                           parameters,
+                                           Int::class.java)!! > 0
+    }
+
 }

@@ -1,5 +1,6 @@
 package no.nav.familie.ba.statistikk
 
+import com.fasterxml.jackson.databind.JsonNode
 import no.nav.familie.ba.statistikk.domene.SaksstatistikkDvhRepository
 import no.nav.familie.eksterne.kontrakter.saksstatistikk.SakDVH
 import no.nav.familie.kontrakter.felles.objectMapper
@@ -16,29 +17,47 @@ class SaksstatistikkSakConsumer(private val saksstatistikkDvhRepository: Sakssta
     private val logger = LoggerFactory.getLogger(this::class.java)
     private val secureLogger = LoggerFactory.getLogger("secureLogger")
 
-    @KafkaListener(topics = ["aapen-barnetrygd-saksstatistikk-sak-v1"],
-                   id = "familie-ba-saksstatistikk-sak",
+    @KafkaListener(topics = [TOPIC_NAVN],
+                   groupId = "saksstatistikk-sak-1",
+                   id = "familie-ba-saksstatistikk-sak-1",
                    idIsGroup = false,
-                   containerFactory = "vedtakDvhListenerContainerFactory")
+                   containerFactory = "kafkaAivenHendelseListenerContainerFactory",
+                   autoStartup = "\${kafka.enabled:true}"
+    )
     @Transactional
     fun consume(cr: ConsumerRecord<String, String>, ack: Acknowledgment) {
         try {
-            logger.info("[${SAK}] Melding mottatt. offset=${cr.offset()}, key=${cr.key()}")
-            secureLogger.info("[${SAK}] Melding mottatt. offset=${cr.offset()}, key=${cr.key()}, melding=${cr.value()}")
+            val offset = cr.offset()
 
-            val json = cr.value()
+            logger.info("[${SAK}] Melding mottatt. offset=$offset, key=${cr.key()}")
+            secureLogger.info("[${SAK}] Melding mottatt. offset=$offset, key=${cr.key()}, melding=${cr.value()}")
 
-            //valider at meldingen lar seg deserialisere
-            val sakDVH = objectMapper.readValue(json, SakDVH::class.java)
-            saksstatistikkDvhRepository.lagre(SAK, cr.offset(), json, sakDVH.funksjonellId).apply {
-                when {
-                    this == 1 -> secureLogger.info("Saksstatistikk-sak mottatt og lagret: $json")
-                    this > 1 -> logger.error("Saksstatistikk-sak mottatt på nytt. Lagret, merket som duplikat. offset=${cr.offset()} key=${cr.key()}")
-                    else -> error("Lagring av nytt Saksstatistikk-sak mislyktes! offset=${cr.offset()} key=${cr.key()}")
-                }
+            if (saksstatistikkDvhRepository.harLestSakMelding(offset)) {
+                logger.info("har alt lest $SAK-melding med offset $offset")
+                ack.acknowledge()
+                return
             }
 
+            val json = cr.value()
+            val parent: JsonNode = objectMapper.readTree(json)
+            val funksjonellId: String = parent.path("funksjonellId").asText()
+
+            saksstatistikkDvhRepository.lagre(SAK, offset, json, funksjonellId).apply {
+                when {
+                    this == 1 -> secureLogger.info("$SAK-melding mottatt og lagret: $json")
+                    this > 1 -> logger.error("$SAK-melding mottatt på nytt. Lagret, merket som duplikat. offset=$offset key=${cr.key()}")
+                    else -> error("Lagring av ny $SAK-melding mislyktes! offset=$offset key=${cr.key()}")
+                }
+            }
+            //valider at meldingen lar seg deserialisere
+            try {
+                objectMapper.readValue(json, SakDVH::class.java)
+            } catch (e: Exception) {
+                logger.error("json for $SAK kan ikke parses til nyeste SakDVH", e)
+                secureLogger.error("json for $SAK kan ikke parses til nyeste SakDVH \n$json")
+            }
             validerSakDvhMotJsonSchema(json)
+
         } catch (up: Exception) {
             handleException(up, cr, logger, SAK)
         }
@@ -47,7 +66,6 @@ class SaksstatistikkSakConsumer(private val saksstatistikkDvhRepository: Sakssta
 
     companion object {
         private const val SAK = "SAK"
-        const val TOPIC_NAVN = "aapen-barnetrygd-saksstatistikk-sak-v1"
+        const val TOPIC_NAVN = "teamfamilie:aapen-barnetrygd-saksstatistikk-sak-v1"
     }
-
 }

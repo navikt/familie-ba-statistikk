@@ -1,8 +1,5 @@
 name: Build-Deploy-Preprod
 on:
-  push:
-    branches-ignore:
-      - 'master'
   workflow_dispatch:
 env:
   IMAGE: docker.pkg.github.com/${{ github.repository }}/familie-ba-statistikk:${{ github.sha }}
