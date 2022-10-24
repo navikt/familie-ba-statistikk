@@ -32,15 +32,15 @@ class SaksstatistikkBehandlingConsumer(private val saksstatistikkDvhRepository: 
             logger.info("[${BEHANDLING}] Melding mottatt. offset=$offset, key=${cr.key()}")
             secureLogger.info("[${BEHANDLING}] Melding mottatt. offset=$offset, key=${cr.key()}, melding=${cr.value()}")
 
-            if (saksstatistikkDvhRepository.harLestBehandlingMelding(offset)) {
+            val json = cr.value()
+            val parent: JsonNode = objectMapper.readTree(json)
+            val funksjonellId: String = parent.path("funksjonellId").asText()
+
+            if (saksstatistikkDvhRepository.harLestBehandlingMelding(funksjonellId)) {
                 logger.info("har alt lest $BEHANDLING-melding med offset $offset")
                 ack.acknowledge()
                 return
             }
-
-            val json = cr.value()
-            val parent: JsonNode = objectMapper.readTree(json)
-            val funksjonellId: String = parent.path("funksjonellId").asText()
 
             saksstatistikkDvhRepository.lagre(BEHANDLING, offset, json, funksjonellId).apply {
                 when {
