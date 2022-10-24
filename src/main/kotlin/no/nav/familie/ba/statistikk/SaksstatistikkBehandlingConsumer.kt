@@ -1,6 +1,5 @@
 package no.nav.familie.ba.statistikk
 
-import com.fasterxml.jackson.databind.JsonNode
 import no.nav.familie.ba.statistikk.domene.SaksstatistikkDvhRepository
 import no.nav.familie.eksterne.kontrakter.saksstatistikk.BehandlingDVH
 import no.nav.familie.kontrakter.felles.objectMapper
@@ -28,25 +27,23 @@ class SaksstatistikkBehandlingConsumer(private val saksstatistikkDvhRepository: 
     fun consume(cr: ConsumerRecord<String, String>, ack: Acknowledgment) {
         try {
             val offset = cr.offset()
-
-            logger.info("[${BEHANDLING}] Melding mottatt. offset=$offset, key=${cr.key()}")
-            secureLogger.info("[${BEHANDLING}] Melding mottatt. offset=$offset, key=${cr.key()}, melding=${cr.value()}")
-
             val json = cr.value()
-            val parent: JsonNode = objectMapper.readTree(json)
-            val funksjonellId: String = parent.path("funksjonellId").asText()
+            val key = cr.key()
 
-            if (saksstatistikkDvhRepository.harLestBehandlingMelding(funksjonellId)) {
-                logger.info("har alt lest $BEHANDLING-melding med offset $offset")
+            logger.info("[${BEHANDLING}] Melding mottatt. offset=$offset, key=$key")
+            secureLogger.info("[${BEHANDLING}] Melding mottatt. offset=$offset, key=$key, melding=$json")
+
+            if (saksstatistikkDvhRepository.harLestBehandlingMelding(key, offset)) {
+                logger.info("har alt lest $BEHANDLING-melding med key $key og offset $offset")
                 ack.acknowledge()
                 return
             }
 
-            saksstatistikkDvhRepository.lagre(BEHANDLING, offset, json, funksjonellId).apply {
+            saksstatistikkDvhRepository.lagre(BEHANDLING, offset, json, funksjonellId = key).apply {
                 when {
                     this == 1 -> secureLogger.info("$BEHANDLING-melding mottatt og lagret: $json")
-                    this > 1 -> logger.error("$BEHANDLING-melding mottatt på nytt. Lagret, merket som duplikat. offset=$offset key=${cr.key()}")
-                    else -> error("Lagring av ny $BEHANDLING-melding mislyktes! offset=$offset key=${cr.key()}")
+                    this > 1 -> logger.error("$BEHANDLING-melding mottatt på nytt. Lagret, merket som duplikat. offset=$offset key=$key")
+                    else -> error("Lagring av ny $BEHANDLING-melding mislyktes! offset=$offset key=$key")
                 }
             }
             //valider at meldingen lar seg deserialisere

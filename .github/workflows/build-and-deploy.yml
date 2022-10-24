@@ -1,6 +1,9 @@
 name: Build-Deploy-Preprod
 on:
   workflow_dispatch:
+  pull_request:
+    types: [ opened, synchronize, reopened, ready_for_review ]
+
 env:
   IMAGE: docker.pkg.github.com/${{ github.repository }}/familie-ba-statistikk:${{ github.sha }}
   IMAGE_LATEST: docker.pkg.github.com/${{ github.repository }}/familie-ba-statistikk:latest

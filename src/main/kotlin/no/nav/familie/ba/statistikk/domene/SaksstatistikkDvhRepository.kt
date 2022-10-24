@@ -98,18 +98,28 @@ class SaksstatistikkDvhRepository(private val jdbcTemplate: NamedParameterJdbcTe
                                            String::class.java)!!
     }
 
-    fun harLestSakMelding(funksjonellId: String): Boolean {
-        val parameters = MapSqlParameterSource().addValue("funksjonellId", funksjonellId)
+    fun harLestSakMelding(funksjonellId: String, offset: Long): Boolean {
+        val parameters = MapSqlParameterSource()
+            .addValue("funksjonellId", funksjonellId)
+            .addValue("offset", offset)
 
-        return jdbcTemplate.queryForObject("select count(*) from SAKSSTATISTIKK_DVH where type = 'SAK' and funksjonell_id = :funksjonellId",
+        return jdbcTemplate.queryForObject("""select count(*) from SAKSSTATISTIKK_DVH where type = 'SAK'
+                                               and funksjonell_id = :funksjonellId
+                                               and offset_verdi = :offset
+                                               and fra_aiven = true""".trimMargin(),
                                            parameters,
                                            Int::class.java)!! > 0
     }
 
-    fun harLestBehandlingMelding(funksjonellId: String): Boolean {
-        val parameters = MapSqlParameterSource().addValue("funksjonellId", funksjonellId)
+    fun harLestBehandlingMelding(funksjonellId: String, offset: Long): Boolean {
+        val parameters = MapSqlParameterSource()
+            .addValue("funksjonellId", funksjonellId)
+            .addValue("offset", offset)
 
-        return jdbcTemplate.queryForObject("select count(*) from SAKSSTATISTIKK_DVH where type = 'BEHANDLING' and funksjonell_id = :funksjonellId",
+        return jdbcTemplate.queryForObject("""select count(*) from SAKSSTATISTIKK_DVH where type = 'BEHANDLING'
+                                               and funksjonell_id = :funksjonellId
+                                               and offset_verdi = :offset
+                                               and fra_aiven = true""".trimMargin(),
                                            parameters,
                                            Int::class.java)!! > 0
     }

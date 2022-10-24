@@ -1,6 +1,5 @@
 package no.nav.familie.ba.statistikk
 
-import com.fasterxml.jackson.databind.JsonNode
 import no.nav.familie.ba.statistikk.domene.SaksstatistikkDvhRepository
 import no.nav.familie.eksterne.kontrakter.saksstatistikk.SakDVH
 import no.nav.familie.kontrakter.felles.objectMapper
@@ -28,25 +27,23 @@ class SaksstatistikkSakConsumer(private val saksstatistikkDvhRepository: Sakssta
     fun consume(cr: ConsumerRecord<String, String>, ack: Acknowledgment) {
         try {
             val offset = cr.offset()
-
-            logger.info("[${SAK}] Melding mottatt. offset=$offset, key=${cr.key()}")
-            secureLogger.info("[${SAK}] Melding mottatt. offset=$offset, key=${cr.key()}, melding=${cr.value()}")
-
             val json = cr.value()
-            val parent: JsonNode = objectMapper.readTree(json)
-            val funksjonellId: String = parent.path("funksjonellId").asText()
+            val key = cr.key()
 
-            if (saksstatistikkDvhRepository.harLestSakMelding(funksjonellId)) {
-                logger.info("har alt lest $SAK-melding med offset $offset")
+            logger.info("[${SAK}] Melding mottatt. offset=$offset, key=$key")
+            secureLogger.info("[${SAK}] Melding mottatt. offset=$offset, key=$key, melding=$json")
+
+            if (saksstatistikkDvhRepository.harLestSakMelding(key, offset)) {
+                logger.info("har alt lest $SAK-melding med key $key og offset $offset")
                 ack.acknowledge()
                 return
             }
 
-            saksstatistikkDvhRepository.lagre(SAK, offset, json, funksjonellId).apply {
+            saksstatistikkDvhRepository.lagre(SAK, offset, json, funksjonellId = key).apply {
                 when {
                     this == 1 -> secureLogger.info("$SAK-melding mottatt og lagret: $json")
-                    this > 1 -> logger.error("$SAK-melding mottatt på nytt. Lagret, merket som duplikat. offset=$offset key=${cr.key()}")
-                    else -> error("Lagring av ny $SAK-melding mislyktes! offset=$offset key=${cr.key()}")
+                    this > 1 -> logger.error("$SAK-melding mottatt på nytt. Lagret, merket som duplikat. offset=$offset key=$key")
+                    else -> error("Lagring av ny $SAK-melding mislyktes! offset=$offset key=$key")
                 }
             }
             //valider at meldingen lar seg deserialisere
