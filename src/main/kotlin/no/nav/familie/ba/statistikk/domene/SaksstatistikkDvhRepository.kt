@@ -31,15 +31,13 @@ class SaksstatistikkDvhRepository(private val jdbcTemplate: NamedParameterJdbcTe
                                            Int::class.java)!!
     }
 
-    fun hent(type: String, offset: Long, fraAiven: Boolean = true): String {
+    fun hent(type: String, offset: Long): String {
         val parameters = MapSqlParameterSource()
                 .addValue("offset", offset)
                 .addValue("type", type)
-                .addValue("fraAiven", fraAiven)
 
         return jdbcTemplate.queryForObject("""SELECT s.json FROM saksstatistikk_dvh s WHERE s.offset_verdi = :offset
-                                                   AND s.type = :type
-                                                   AND s.fra_aiven = :fraAiven""",
+                                                   AND s.type = :type""",
                                            parameters,
                                            String::class.java)!!
     }
@@ -97,31 +95,4 @@ class SaksstatistikkDvhRepository(private val jdbcTemplate: NamedParameterJdbcTe
                                            parameters,
                                            String::class.java)!!
     }
-
-    fun harLestSakMelding(funksjonellId: String, offset: Long): Boolean {
-        val parameters = MapSqlParameterSource()
-            .addValue("funksjonellId", funksjonellId)
-            .addValue("offset", offset)
-
-        return jdbcTemplate.queryForObject("""select count(*) from SAKSSTATISTIKK_DVH where type = 'SAK'
-                                               and funksjonell_id = :funksjonellId
-                                               and offset_verdi = :offset
-                                               and fra_aiven = true""".trimMargin(),
-                                           parameters,
-                                           Int::class.java)!! > 0
-    }
-
-    fun harLestBehandlingMelding(funksjonellId: String, offset: Long): Boolean {
-        val parameters = MapSqlParameterSource()
-            .addValue("funksjonellId", funksjonellId)
-            .addValue("offset", offset)
-
-        return jdbcTemplate.queryForObject("""select count(*) from SAKSSTATISTIKK_DVH where type = 'BEHANDLING'
-                                               and funksjonell_id = :funksjonellId
-                                               and offset_verdi = :offset
-                                               and fra_aiven = true""".trimMargin(),
-                                           parameters,
-                                           Int::class.java)!! > 0
-    }
-
 }

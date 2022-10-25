@@ -2,10 +2,8 @@ package no.nav.familie.ba.statistikk.config
 
 import org.apache.kafka.clients.CommonClientConfigs
 import org.apache.kafka.clients.consumer.ConsumerConfig
-import org.apache.kafka.clients.producer.ProducerConfig
 import org.apache.kafka.common.config.SslConfigs
 import org.apache.kafka.common.serialization.StringDeserializer
-import org.apache.kafka.common.serialization.StringSerializer
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -14,9 +12,6 @@ import org.springframework.kafka.config.ConcurrentKafkaListenerContainerFactory
 import org.springframework.kafka.config.KafkaListenerConfigUtils
 import org.springframework.kafka.config.KafkaListenerEndpointRegistry
 import org.springframework.kafka.core.DefaultKafkaConsumerFactory
-import org.springframework.kafka.core.DefaultKafkaProducerFactory
-import org.springframework.kafka.core.KafkaTemplate
-import org.springframework.kafka.core.ProducerFactory
 import org.springframework.kafka.listener.ContainerProperties
 import java.time.Duration
 
@@ -33,16 +28,6 @@ class KafkaAivenConfig(val environment: Environment) {
         factory.consumerFactory = DefaultKafkaConsumerFactory(consumerConfigs())
         factory.setCommonErrorHandler(kafkaRestartingErrorHandler)
         return factory
-    }
-
-    @Bean
-    fun producerFactory(): ProducerFactory<String, String> {
-        return DefaultKafkaProducerFactory(producerConfigs())
-    }
-
-    @Bean
-    fun kafkaAivenTemplate(): KafkaTemplate<String, String> {
-        return KafkaTemplate(producerFactory())
     }
 
     @ConditionalOnMissingBean(KafkaListenerEndpointRegistry::class)
@@ -65,22 +50,6 @@ class KafkaAivenConfig(val environment: Environment) {
             return consumerConfigs + securityConfig()
         }
         return consumerConfigs.toMap()
-    }
-
-    private fun producerConfigs(): Map<String, Any> {
-        val kafkaBrokers = System.getenv("KAFKA_BROKERS") ?: "http://localhost:9092"
-        val producerConfigs = mutableMapOf(
-            ProducerConfig.BOOTSTRAP_SERVERS_CONFIG to kafkaBrokers,
-            ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG to StringSerializer::class.java,
-            ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG to StringSerializer::class.java,
-            ProducerConfig.ENABLE_IDEMPOTENCE_CONFIG to true, // Den sikrer rekkefølge
-            ProducerConfig.ACKS_CONFIG to "all", // Den sikrer at data ikke mistes
-            ProducerConfig.CLIENT_ID_CONFIG to "producer-familie-ba-statistikk-1"
-        )
-        if (environment.activeProfiles.none { it.contains("dev") || it.contains("postgres") }) {
-            return producerConfigs + securityConfig()
-        }
-        return producerConfigs.toMap()
     }
 
     private fun securityConfig(): Map<String, Any> {
