@@ -63,6 +63,6 @@ class SaksstatistikkBehandlingConsumer(private val saksstatistikkDvhRepository: 
 
     companion object {
         private const val BEHANDLING = "BEHANDLING"
-        const val TOPIC_NAVN = "teamfamilie:aapen-barnetrygd-saksstatistikk-behandling-v1"
+        const val TOPIC_NAVN = "teamfamilie.aapen-barnetrygd-saksstatistikk-behandling-v1"
     }
 }
