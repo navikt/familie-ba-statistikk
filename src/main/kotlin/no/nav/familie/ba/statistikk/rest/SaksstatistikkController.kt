@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 import java.time.LocalDateTime
 
@@ -28,9 +29,12 @@ class SaksstatistikkController(val saksstatistikkDvhRepository: SaksstatistikkDv
 ) {
 
     @GetMapping(path = ["/sak/offsett/{offset}"], produces = [MediaType.APPLICATION_JSON_VALUE])
-    fun sak(@PathVariable offset: Long): String {
+    fun sak(
+        @PathVariable offset: Long,
+        @RequestParam(required = false) fraAiven: Boolean = true
+    ): String {
         return try {
-            saksstatistikkDvhRepository.hent("SAK", offset)
+            saksstatistikkDvhRepository.hent("SAK", offset, fraAiven)
         } catch (e: EmptyResultDataAccessException) {
             "Fant ikke sak med offset $offset"
         }
@@ -54,9 +58,12 @@ class SaksstatistikkController(val saksstatistikkDvhRepository: SaksstatistikkDv
 
 
     @GetMapping(path = ["/behandling/offset/{offset}"], produces = [MediaType.APPLICATION_JSON_VALUE])
-    fun behandling(@PathVariable offset: Long): String {
+    fun behandling(
+        @PathVariable offset: Long,
+        @RequestParam(required = false) fraAiven: Boolean = true
+    ): String {
         return try {
-            saksstatistikkDvhRepository.hent("BEHANDLING", offset)
+            saksstatistikkDvhRepository.hent("BEHANDLING", offset, fraAiven)
         } catch (e: EmptyResultDataAccessException) {
             "Fant ikke behandling med offset $offset"
         }

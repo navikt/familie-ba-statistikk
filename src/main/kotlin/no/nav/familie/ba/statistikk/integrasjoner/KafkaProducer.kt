@@ -14,16 +14,16 @@ class KafkaProducer {
     private val secureLogger = LoggerFactory.getLogger("secureLogger")
 
     @Autowired
-    lateinit var kafkaOnpremProducer: KafkaTemplate<String, String>
+    lateinit var kafkaProducer: KafkaTemplate<String, String>
 
     fun sendSakstatistikkSakmelding(funksjonellId: String, melding: String): Long {
-        val record = kafkaOnpremProducer.send(SaksstatistikkSakConsumer.TOPIC_NAVN, funksjonellId, melding).get()
+        val record = kafkaProducer.send(SaksstatistikkSakConsumer.TOPIC_NAVN, funksjonellId, melding).get()
         secureLogger.info("Sendt sendSakstatistikkSakmelding: ${record.recordMetadata.offset()} $funksjonellId-$melding")
         return record.recordMetadata.offset()
     }
 
     fun sendSakstatistikkBehandlingmelding(funksjonellId: String, melding: String): Long {
-        val record = kafkaOnpremProducer.send(SaksstatistikkBehandlingConsumer.TOPIC_NAVN, funksjonellId, melding).get()
+        val record = kafkaProducer.send(SaksstatistikkBehandlingConsumer.TOPIC_NAVN, funksjonellId, melding).get()
         secureLogger.info("Sendt sendSakstatistikkBehandlingmelding: ${record.recordMetadata.offset()} $funksjonellId-$melding")
         return record.recordMetadata.offset()
     }
