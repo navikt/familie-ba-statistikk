@@ -1,5 +1,9 @@
 package no.nav.familie.ba.statistikk.rest
 
+import no.nav.familie.ba.statistikk.domene.SaksstatistikkDVHType.BEHANDLING
+import no.nav.familie.ba.statistikk.domene.SaksstatistikkDVHType.BEHANDLING_2
+import no.nav.familie.ba.statistikk.domene.SaksstatistikkDVHType.SAK
+import no.nav.familie.ba.statistikk.domene.SaksstatistikkDVHType.SAK_2
 import no.nav.familie.ba.statistikk.domene.SaksstatistikkDvhRepository
 import no.nav.familie.ba.statistikk.integrasjoner.BasakClient
 import no.nav.familie.ba.statistikk.integrasjoner.KafkaProducer
@@ -34,7 +38,7 @@ class SaksstatistikkController(val saksstatistikkDvhRepository: SaksstatistikkDv
         @RequestParam(required = false) fraAiven: Boolean = true
     ): String {
         return try {
-            saksstatistikkDvhRepository.hent("SAK", offset, fraAiven)
+            saksstatistikkDvhRepository.hent(if (fraAiven) SAK_2 else SAK, offset)
         } catch (e: EmptyResultDataAccessException) {
             "Fant ikke sak med offset $offset"
         }
@@ -63,7 +67,7 @@ class SaksstatistikkController(val saksstatistikkDvhRepository: SaksstatistikkDv
         @RequestParam(required = false) fraAiven: Boolean = true
     ): String {
         return try {
-            saksstatistikkDvhRepository.hent("BEHANDLING", offset, fraAiven)
+            saksstatistikkDvhRepository.hent(if (fraAiven) BEHANDLING_2 else BEHANDLING, offset)
         } catch (e: EmptyResultDataAccessException) {
             "Fant ikke behandling med offset $offset"
         }
