@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository
 @Repository
 class SaksstatistikkDvhRepository(private val jdbcTemplate: NamedParameterJdbcTemplate) {
 
-    fun lagre(type: String, offset: Long, json: String, funksjonellId: String): Int {
+    fun lagre(type: SaksstatistikkDVHType, offset: Long, json: String, funksjonellId: String): Int {
         val sql =
                 "insert into SAKSSTATISTIKK_DVH(ID, JSON, OFFSET_VERDI, TYPE, FUNKSJONELL_ID) " +
                 "values (nextval('SAKSSTATISTIKK_DVH_SEQ'), to_json(:jsontext::json), :offset, :type, :funksjonellId)"
@@ -16,7 +16,7 @@ class SaksstatistikkDvhRepository(private val jdbcTemplate: NamedParameterJdbcTe
                 .addValue("jsontext", json)
                 .addValue("offset", offset)
                 .addValue("duplikat", antallHendelserMedFunksjonellId > 0)
-                .addValue("type", type)
+                .addValue("type", type.name)
                 .addValue("funksjonellId", funksjonellId)
 
         return jdbcTemplate.update(sql, parameters) + antallHendelserMedFunksjonellId
@@ -31,10 +31,10 @@ class SaksstatistikkDvhRepository(private val jdbcTemplate: NamedParameterJdbcTe
                                            Int::class.java)!!
     }
 
-    fun hent(type: String, offset: Long): String {
+    fun hent(type: SaksstatistikkDVHType, offset: Long): String {
         val parameters = MapSqlParameterSource()
                 .addValue("offset", offset)
-                .addValue("type", type)
+                .addValue("type", type.name)
 
         return jdbcTemplate.queryForObject("""SELECT s.json FROM saksstatistikk_dvh s WHERE s.offset_verdi = :offset
                                                    AND s.type = :type""",
@@ -95,4 +95,36 @@ class SaksstatistikkDvhRepository(private val jdbcTemplate: NamedParameterJdbcTe
                                            parameters,
                                            String::class.java)!!
     }
+
+    fun harLestSakMelding(funksjonellId: String, offset: Long): Boolean {
+        val parameters = MapSqlParameterSource()
+            .addValue("funksjonellId", funksjonellId)
+            .addValue("offset", offset)
+
+        return jdbcTemplate.queryForObject("""select count(*) from SAKSSTATISTIKK_DVH where type = 'SAK_2'
+                                               and funksjonell_id = :funksjonellId
+                                               and offset_verdi = :offset""".trimMargin(),
+                                           parameters,
+                                           Int::class.java)!! > 0
+    }
+
+    fun harLestBehandlingMelding(funksjonellId: String, offset: Long): Boolean {
+        val parameters = MapSqlParameterSource()
+            .addValue("funksjonellId", funksjonellId)
+            .addValue("offset", offset)
+
+        return jdbcTemplate.queryForObject("""select count(*) from SAKSSTATISTIKK_DVH where type = 'BEHANDLING_2'
+                                               and funksjonell_id = :funksjonellId
+                                               and offset_verdi = :offset""".trimMargin(),
+                                           parameters,
+                                           Int::class.java)!! > 0
+    }
+
+}
+
+enum class SaksstatistikkDVHType {
+    BEHANDLING,
+    BEHANDLING_2,
+    SAK,
+    SAK_2
 }
