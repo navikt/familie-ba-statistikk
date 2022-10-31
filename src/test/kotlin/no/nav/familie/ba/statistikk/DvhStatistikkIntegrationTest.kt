@@ -63,14 +63,14 @@ class DvhStatistikkIntegrationTest {
         val parameters = MapSqlParameterSource().addValue("sakId", sak.sakId)
 
         val init_count =
-                jdbcTemplate.queryForObject("select count(*) from SAKSSTATISTIKK_DVH where type='SAK' and JSON ->> 'sakId' = :sakId",
+                jdbcTemplate.queryForObject("select count(*) from SAKSSTATISTIKK_DVH where type='SAK_2' and JSON ->> 'sakId' = :sakId",
                                             parameters,
                                             Int::class.java)!!
 
         sakConsumer.consume(lagConsumerRecord(sak), ack)
 
         val count: Int =
-                jdbcTemplate.queryForObject("select count(*) from SAKSSTATISTIKK_DVH where type='SAK' and JSON ->> 'sakId' = :sakId",
+                jdbcTemplate.queryForObject("select count(*) from SAKSSTATISTIKK_DVH where type='SAK_2' and JSON ->> 'sakId' = :sakId",
                                             parameters,
                                             Int::class.java)!!
 
@@ -84,14 +84,14 @@ class DvhStatistikkIntegrationTest {
         val parameters = MapSqlParameterSource().addValue("behandlingId", behandling.behandlingId)
 
         val init_count =
-                jdbcTemplate.queryForObject("select count(*) from SAKSSTATISTIKK_DVH where type='BEHANDLING' and JSON ->> 'behandlingId' = :behandlingId",
+                jdbcTemplate.queryForObject("select count(*) from SAKSSTATISTIKK_DVH where type='BEHANDLING_2' and JSON ->> 'behandlingId' = :behandlingId",
                                             parameters,
                                             Int::class.java)!!
 
         saksstatistikkBehandlingConsumer.consume(lagConsumerRecord(behandling), ack)
 
         val count: Int =
-                jdbcTemplate.queryForObject("select count(*) from SAKSSTATISTIKK_DVH where type='BEHANDLING' and JSON ->> 'behandlingId' = :behandlingId",
+                jdbcTemplate.queryForObject("select count(*) from SAKSSTATISTIKK_DVH where type='BEHANDLING_2' and JSON ->> 'behandlingId' = :behandlingId",
                                             parameters,
                                             Int::class.java)!!
 
