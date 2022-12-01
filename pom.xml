@@ -187,7 +187,7 @@
             <version>1.1.1</version>
         </dependency>
         <dependency>
-            <groupId>io.mockk</groupId>
+            <groupId>io.mockk-jvm</groupId>
             <artifactId>mockk</artifactId>
             <version>1.13.3</version>
             <scope>test</scope>
