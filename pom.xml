@@ -20,7 +20,7 @@
         <changelist>-SNAPSHOT</changelist>
         <java.version>17</java.version>
         <jvmTarget>17</jvmTarget>
-        <felles-kontrakter.version>2.0_20221130105458_c1bd5bb</felles-kontrakter.version>
+        <felles-kontrakter.version>2.0_20221213124351_7c53585</felles-kontrakter.version>
         <felles.version>1.20221101085322_cc4d556</felles.version>
         <kotlin.version>1.7.22</kotlin.version>
         <familie.kontrakter.saksstatistikk>2.0_20220125142454_8f2ffc3</familie.kontrakter.saksstatistikk>
