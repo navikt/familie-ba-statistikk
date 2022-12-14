@@ -20,9 +20,9 @@
         <changelist>-SNAPSHOT</changelist>
         <java.version>17</java.version>
         <jvmTarget>17</jvmTarget>
-        <felles-kontrakter.version>2.0_20221118154109_cefc994</felles-kontrakter.version>
-        <felles.version>1.20221101085322_cc4d556</felles.version>
-        <kotlin.version>1.7.21</kotlin.version>
+        <felles-kontrakter.version>2.0_20221213124351_7c53585</felles-kontrakter.version>
+        <felles.version>1.20221202080911_bcf8f33</felles.version>
+        <kotlin.version>1.7.22</kotlin.version>
         <familie.kontrakter.saksstatistikk>2.0_20220125142454_8f2ffc3</familie.kontrakter.saksstatistikk>
         <familie.kontrakter.stønadsstatistikk>2.0_20221123134052_8bdd6c8</familie.kontrakter.stønadsstatistikk>
         <spring-cloud.version>3.1.1</spring-cloud.version>
@@ -135,7 +135,7 @@
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
-            <version>42.5.0</version>
+            <version>42.5.1</version>
         </dependency>
         <dependency>
             <groupId>com.h2database</groupId>
@@ -188,8 +188,8 @@
         </dependency>
         <dependency>
             <groupId>io.mockk</groupId>
-            <artifactId>mockk</artifactId>
-            <version>1.12.5</version>
+            <artifactId>mockk-jvm</artifactId>
+            <version>1.13.3</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
