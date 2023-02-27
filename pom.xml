@@ -25,9 +25,9 @@
         <kotlin.version>1.8.10</kotlin.version>
         <familie.kontrakter.saksstatistikk>2.0_20230214104704_706e9c0</familie.kontrakter.saksstatistikk>
         <familie.kontrakter.stønadsstatistikk>2.0_20230223155122_2e81c44</familie.kontrakter.stønadsstatistikk>
-        <spring-cloud.version>3.1.1</spring-cloud.version>
-        <token-validation-spring.version>2.0.5</token-validation-spring.version>
-        <springdoc.version>1.6.14</springdoc.version>
+        <spring-cloud.version>4.0.0</spring-cloud.version>
+        <token-validation-spring.version>3.0.3</token-validation-spring.version>
+        <springdoc.version>2.0.2</springdoc.version>
     </properties>
 
     <dependencies>
@@ -67,12 +67,12 @@
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-bootstrap</artifactId>
-            <version>${spring-cloud.version}</version>
+            <version>4.0.1</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-vault-config</artifactId>
-            <version>${spring-cloud.version}</version>
+            <version>4.0.0</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -91,12 +91,12 @@
         </dependency>
         <dependency>
             <groupId>org.springdoc</groupId>
-            <artifactId>springdoc-openapi-ui</artifactId>
+            <artifactId>springdoc-openapi-starter-common</artifactId>
             <version>${springdoc.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springdoc</groupId>
-            <artifactId>springdoc-openapi-kotlin</artifactId>
+            <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
             <version>${springdoc.version}</version>
         </dependency>
 
@@ -108,7 +108,7 @@
         </dependency>
         <dependency>
             <groupId>no.nav.security</groupId>
-            <artifactId>token-validation-test-support</artifactId>
+            <artifactId>token-validation-spring-test</artifactId>
             <version>${token-validation-spring.version}</version>
             <scope>test</scope>
         </dependency>
@@ -121,7 +121,7 @@
         <dependency>
             <groupId>org.springframework.vault</groupId>
             <artifactId>spring-vault-core</artifactId>
-            <version>2.3.2</version>
+            <version>3.0.1</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.cloud</groupId>
@@ -147,6 +147,11 @@
             <artifactId>postgresql</artifactId>
             <version>1.17.6</version>
             <scope>test</scope>
+        </dependency>
+        <!-- https://github.com/spring-projects/spring-boot/issues/33044#issuecomment-1379812611 -->
+        <dependency>
+            <groupId>org.eclipse.jetty</groupId>
+            <artifactId>jetty-server</artifactId>
         </dependency>
 
         <!-- NAV-interne avhengigheter -->
