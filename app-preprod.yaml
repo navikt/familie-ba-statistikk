@@ -39,8 +39,8 @@ spec:
   secureLogs:
     enabled: true
   ingresses:
-    - https://familie-ba-statistikk.dev.adeo.no
     - https://familie-ba-statistikk.dev.intern.nav.no
+    - https://familie-ba-statistikk.intern.dev.intern.nav.no
     - https://familie-ba-statistikk.dev-fss-pub.nais.io
   env:
     - name: SPRING_PROFILES_ACTIVE
