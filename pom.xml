@@ -25,7 +25,7 @@
         <kotlin.version>1.8.10</kotlin.version>
         <familie.kontrakter.saksstatistikk>2.0_20230214104704_706e9c0</familie.kontrakter.saksstatistikk>
         <familie.kontrakter.stønadsstatistikk>2.0_20230223155122_2e81c44</familie.kontrakter.stønadsstatistikk>
-        <spring-cloud.version>4.0.0</spring-cloud.version>
+        <spring-cloud.version>4.0.1</spring-cloud.version>
         <token-validation-spring.version>3.0.3</token-validation-spring.version>
         <springdoc.version>2.0.4</springdoc.version>
     </properties>
