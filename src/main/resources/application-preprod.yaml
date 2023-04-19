@@ -7,7 +7,7 @@ rolle:
     forvalter: "928636f4-fd0d-4149-978e-a6fb68bb19de"
 
 BA_SAK_SCOPE: api://dev-gcp.teamfamilie.familie-ba-sak/.default
-BA_SAK_API_URL: https://familie-ba-sak.dev.intern.nav.no/api
+BA_SAK_API_URL: https://familie-ba-sak.intern.dev.nav.no/api
 
 
 
