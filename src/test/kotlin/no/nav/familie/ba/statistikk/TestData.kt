@@ -5,6 +5,7 @@ import no.nav.familie.eksterne.kontrakter.BehandlingTypeV2
 import no.nav.familie.eksterne.kontrakter.BehandlingÅrsakV2
 import no.nav.familie.eksterne.kontrakter.KategoriV2
 import no.nav.familie.eksterne.kontrakter.Kompetanse
+import no.nav.familie.eksterne.kontrakter.KompetanseAktivitet
 import no.nav.familie.eksterne.kontrakter.KompetanseResultat
 import no.nav.familie.eksterne.kontrakter.PersonDVHV2
 import no.nav.familie.eksterne.kontrakter.SøkersAktivitet
@@ -45,9 +46,9 @@ object TestData {
                 Kompetanse(
                     barnsIdenter = listOf("1", "2"),
                     barnetsBostedsland = "NO",
-                    annenForeldersAktivitet = AnnenForeldersAktivitet.FORSIKRET_I_BOSTEDSLAND,
+                    annenForeldersAktivitet = KompetanseAktivitet.FORSIKRET_I_BOSTEDSLAND,
                     annenForeldersAktivitetsland = "GB",
-                    sokersaktivitet = SøkersAktivitet.ARBEIDER_I_NORGE,
+                    sokersaktivitet = KompetanseAktivitet.ARBEIDER,
                     resultat = KompetanseResultat.NORGE_ER_PRIMÆRLAND,
                     fom = YearMonth.now(),
                     tom = YearMonth.now()
