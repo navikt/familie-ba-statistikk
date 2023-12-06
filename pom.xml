@@ -26,7 +26,7 @@
         <familie.kontrakter.saksstatistikk>2.0_20230214104704_706e9c0</familie.kontrakter.saksstatistikk>
         <familie.kontrakter.stønadsstatistikk>2.0_20230912090318_2267c05</familie.kontrakter.stønadsstatistikk>
         <spring-cloud.version>4.0.1</spring-cloud.version>
-        <token-validation-spring.version>3.0.3</token-validation-spring.version>
+        <token-validation-spring.version>3.2.0</token-validation-spring.version>
         <springdoc.version>2.2.0</springdoc.version>
     </properties>
 
