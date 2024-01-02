@@ -13,7 +13,7 @@ jobs:
         uses: nais/deploy/actions/deploy@v1
         env:
           APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
-          CLUSTER: dev-fss
+          CLUSTER: dev-gcp
           RESOURCE: .github/familie-ba-kafka-manager-dev.yaml
       - name: Deploy familile-ba-kafka-manager til prod
         uses: nais/deploy/actions/deploy@v1
