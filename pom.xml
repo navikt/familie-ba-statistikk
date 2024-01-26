@@ -154,7 +154,7 @@
         <dependency>
             <groupId>org.testcontainers</groupId>
             <artifactId>postgresql</artifactId>
-            <version>1.19.3</version>
+            <version>1.19.4</version>
             <scope>test</scope>
         </dependency>
         <!-- https://github.com/spring-projects/spring-boot/issues/33044#issuecomment-1379812611 -->
