@@ -1,5 +1,6 @@
 # familie-ba-statistikk
 
+Appen ble skrudd av 12 Februar 2024
 Konsumerer meldinger fra ba-sak for stønad og saksstatistikk og lagrer de ned i en tabell
 
 ## tabeller
